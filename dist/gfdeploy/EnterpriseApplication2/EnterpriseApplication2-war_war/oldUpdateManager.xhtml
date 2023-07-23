@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+    <title>Update Manager</title>
+</h:head>
+
+<h:body>
+    <h:form>
+        <!-- Input field for Manager ID -->
+        <h:outputLabel for="managerIdInput" value="Manager ID: " />
+        <h:inputText id="managerIdInput" value="#{managerBean.managerIdInput}" required="true">
+            <f:validateLongRange minimum="1" maximum="9999" />
+        </h:inputText>
+        <h:message for="managerIdInput" style="color: red;" />
+
+        <!-- Update Manager button -->
+        <p:commandButton value="Find Manager" action="#{managerBean.findManager}" update="selectedManagerTable" />
+
+        <!-- Display Manager Data for update -->
+        <h:panelGroup rendered="#{not empty managerBean.selectedManager}">
+            <h3>Update Manager Data:</h3>
+            
+            <h:outputText value="#{managerBean.selectedManager.firstName}" />
+            
+            <h:outputText value="#{managerBean.selectedManager.lastName}" />
+            
+            
+            <!--<p:inputText id="firstNameInput" value="#{managerBean.selectedManager.firstName}" required="true" />
+            <h:message for="firstNameInput" style="color: red;" /> 
+
+            
+            <p:inputText id="lastNameInput" value="#{managerBean.selectedManager.lastName}" required="true" />
+            <h:message for="lastNameInput" style="color: red;" /> -->
+
+        </h:panelGroup>
+        
+        
+    </h:form>
+    
+    <h:form>
+        <p:panelGrid columns="2">
+            <h:outputLabel for="firstName" value="First Name:" />
+            <p:inputText id="firstName" value="#{managerBean.selectedManager.firstName}" required="true" />
+
+            <h:outputLabel for="lastName" value="Last Name:" />
+            <p:inputText id="lastName" value="#{managerBean.selectedManager.lastName}" required="true" />
+
+            <p:commandButton value="Update Manager" action="#{managerBean.updateManager}" />
+        </p:panelGrid>
+    </h:form>
+    
+    <p:button value="Go to Add Manager Page" outcome="addManager" />
+    <p:button value="Go to Delete Manager Page" outcome="deleteManager" />
+    
+    <h2>Managers List</h2>
+    <h:dataTable id="selectedManagerTable" value="#{managerBean.selectedManager}" var="manager">
+        <h:column>
+            <f:facet name="header">ID</f:facet>
+            #{manager.id}
+        </h:column>
+        <h:column>
+            <f:facet name="header">First Name</f:facet>
+            #{manager.firstName}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Last Name</f:facet>
+            #{manager.lastName}
+        </h:column>
+    </h:dataTable>
+    
+</h:body>
+
+</html>

@@ -18,24 +18,16 @@ import javax.persistence.Id;
 @Entity
 public class Customer extends User implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    /*private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long customerId;
+    private Long customerId; */
     private String username;
     private String password;
     private String firstName;
     private String lastName;
     private String email;
     private String phoneNumber;
-
-    public Long getId() {
-        return customerId;
-    }
-
-    public void setId(Long customerId) {
-        this.customerId = customerId;
-    }
 
     public String getUsername() {
         return username;
@@ -84,7 +76,8 @@ public class Customer extends User implements Serializable {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
-
+}
+/*
     @Override
     public int hashCode() {
         int hash = 0;
@@ -111,3 +104,4 @@ public class Customer extends User implements Serializable {
     }
     
 }
+*/

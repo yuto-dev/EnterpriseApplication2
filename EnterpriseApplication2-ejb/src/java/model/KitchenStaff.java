@@ -18,10 +18,10 @@ import javax.persistence.Id;
 @Entity
 public class KitchenStaff extends User implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    /*private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long staffId;
+    private Long staffId;*/
     private String username;
     private String password;
     private String firstName;
@@ -31,13 +31,7 @@ public class KitchenStaff extends User implements Serializable {
 
     
 
-    public Long getId() {
-        return staffId;
-    }
 
-    public void setId(Long staffId) {
-        this.staffId = staffId;
-    }
 
     public String getUsername() {
         return username;
@@ -86,7 +80,8 @@ public class KitchenStaff extends User implements Serializable {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
-
+}
+/*
     @Override
     public int hashCode() {
         int hash = 0;
@@ -113,3 +108,4 @@ public class KitchenStaff extends User implements Serializable {
     }
     
 }
+ */

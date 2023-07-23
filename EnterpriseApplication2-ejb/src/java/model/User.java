@@ -5,16 +5,58 @@
  */
 package model;
 
+import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  *
  * @author Ryzen5
  */
-public class User {
-    private String username;
-    private String password;
-    private String userType;
+@Entity
+@Table(name = "users")
+public class User implements Serializable {
 
-    // Constructor, getters, and setters
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+     //@Column(nullable = false, unique = true)
+    private String username;
+
+     //@Column(nullable = false)
+    private String password;
+
+     //@Column(nullable = false)
+    private String userType;
+    
+     //@Column(nullable = false)
+    private String firstName;
+    
+     //@Column(nullable = false)
+    private String lastName;
+    
+     //@Column(nullable = false)
+    private String email;
+    
+     //@Column(nullable = false)
+    private String phoneNumber;
+
+
+    // Constructors, getters, and setters (omitted for brevity)
+    
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getUsername() {
         return username;
@@ -39,5 +81,38 @@ public class User {
     public void setUserType(String userType) {
         this.userType = userType;
     }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 }
+
 

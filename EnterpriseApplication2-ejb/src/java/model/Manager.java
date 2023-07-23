@@ -18,10 +18,10 @@ import javax.persistence.Id;
 @Entity
 public class Manager extends User implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    /*private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long managerId;
+    private Long managerId;*/
     private String username;
     private String password;
     private String firstName;
@@ -29,13 +29,6 @@ public class Manager extends User implements Serializable {
     private String email;
     private String phoneNumber;
 
-    public Long getId() {
-        return managerId;
-    }
-
-    public void setId(Long managerId) {
-        this.managerId = managerId;
-    }
 
     public String getUsername() {
         return username;
@@ -84,7 +77,8 @@ public class Manager extends User implements Serializable {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
-
+}
+/*
     @Override
     public int hashCode() {
         int hash = 0;
@@ -111,3 +105,4 @@ public class Manager extends User implements Serializable {
     }
     
 }
+ */
