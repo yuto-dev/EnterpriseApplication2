@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+    <title>Add Manager</title>
+</h:head>
+<h:body>
+    <h1>Add Manager</h1>
+    <h:form>
+        <p:panelGrid columns="2">
+            <h:outputLabel for="firstName" value="First Name:" />
+            <p:inputText id="firstName" value="#{managerBean.newManager.firstName}" required="true" />
+
+            <h:outputLabel for="lastName" value="Last Name:" />
+            <p:inputText id="lastName" value="#{managerBean.newManager.lastName}" required="true" />
+
+            <p:commandButton value="Add Manager" action="#{managerBean.addManager}" update="managerTable" />
+        </p:panelGrid>
+    </h:form>
+
+    <p:button value="Go to Delete Manager Page" outcome="deleteManager" />
+    <p:button value="Go to Update Manager Page" outcome="updateManager" />
+    
+    <p:commandButton value="Delete All Managers" action="#{managerBean.deleteAllManagers}" update="managerTable" />
+    
+    <h2>Managers List</h2>
+    <h:dataTable id="managerTable" value="#{managerBean.managers}" var="manager">
+        <h:column>
+            <f:facet name="header">ID</f:facet>
+            #{manager.id}
+        </h:column>
+        <h:column>
+            <f:facet name="header">First Name</f:facet>
+            #{manager.firstName}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Last Name</f:facet>
+            #{manager.lastName}
+        </h:column>
+    </h:dataTable>
+</h:body>
+</html>
+
+
