@@ -20,11 +20,12 @@ and open the template in the editor.
                     <f:validateLongRange minimum="1" maximum="9999" />
                 </h:inputText>
 
-                <h:commandButton value="Delete Manager" action="#{managerBean.deleteManager}" />
+                <p:commandButton value="Delete Manager" action="#{managerBean.deleteManager}" update="managerTable" />
         </h:panelGrid>
     </h:form>
 
     <p:button value="Go to Add Manager Page" outcome="addManager" />
+    <p:button value="Go to Update Manager Page" outcome="updateManager" />
     
     <h2>Managers List</h2>
     <h:dataTable id="managerTable" value="#{managerBean.managers}" var="manager">

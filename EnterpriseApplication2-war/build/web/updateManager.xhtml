@@ -13,6 +13,8 @@ and open the template in the editor.
     <title>Update Manager</title>
 </h:head>
 <h:body>
+    <p:button value="Go to Add Manager Page" outcome="addManager" />
+    <p:button value="Go to Delete Manager Page" outcome="deleteManager" />
     <h:form>
         
         <!-- Table to display the list of managers -->
@@ -30,19 +32,22 @@ and open the template in the editor.
                 <h:outputText value="#{manager.userType}" />
             </p:column>
             <!-- Add other columns for other properties -->
-            <p:column headerText="Action">
-                <p:commandButton value="Select" action="#{managerBean.setSelectedManager(manager)}" />
-            </p:column>
             <p:column headerText="Apply">
                 <p:commandButton value="Apply" action="#{managerBean.updateManager(manager)}" update="managerTable" />
             </p:column>
         </p:dataTable>
-
-        <p:commandButton value="Update Fields" update="managerTable" />
         
-        <p:panel id="updateForm" visible="true">
-            <!--<h:outputLabel for="idInput" value="ID:" />
-            <p:inputText id="idInput" value="#{managerBean.selectedManagerId}" />-->
+        <h2>Instructions:</h2>
+        <ul>
+            <li>Enter the ID of manager to be modified</li>
+            <li>Enter the new first name and last name to be updated</li>
+            <li>Click the apply button to the corresponding manager on the right column of the table</li>
+            <b>The apply button will not work if the entered ID and the ID of the corresponding manager does not match</b>
+        </ul>
+        
+        <p:panel id="updateForm" rendered="#{not empty managerBean.selectedManager}">
+            <h:outputLabel for="idInput" value="ID:" />
+            <p:inputText id="idInput" value="#{managerBean.selectedManagerId}" />
             <h:outputLabel for="firstInput" value="First Name:" />
             <p:inputText id="firstInput" value="#{managerBean.newFirstName}" />
             <h:outputLabel for="lastInput" value="Last Name:" />
