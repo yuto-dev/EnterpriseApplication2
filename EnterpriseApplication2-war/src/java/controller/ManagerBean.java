@@ -73,6 +73,29 @@ public class ManagerBean implements Serializable {
         return phoneNumberBuilder.toString();
     }
     
+    public String formatPhoneNumber(String phoneNumber) {
+        if (phoneNumber == null || phoneNumber.length() != 10) {
+            // Return original input if it is not a 10-digit number
+            return phoneNumber;
+        }
+
+        // Use StringBuilder to build the formatted phone number
+        StringBuilder formattedNumber = new StringBuilder();
+
+        // Add the first three digits
+        formattedNumber.append(phoneNumber.substring(0, 3));
+        formattedNumber.append("-");
+
+        // Add the next four digits
+        formattedNumber.append(phoneNumber.substring(3, 7));
+        formattedNumber.append("-");
+
+        // Add the last three digits
+        formattedNumber.append(phoneNumber.substring(7));
+
+        return formattedNumber.toString();
+    }
+    
     public void addManager() {
         newManager.setUserType("M");
         System.out.println("inside");
@@ -82,7 +105,7 @@ public class ManagerBean implements Serializable {
         
         if (newManager.getPhoneNumber()== null || newManager.getPhoneNumber().trim().isEmpty()) {
             String generatedPhoneNumber = generatePhoneNumber();
-            newManager.setPhoneNumber(generatedPhoneNumber);
+            newManager.setPhoneNumber(formatPhoneNumber(generatedPhoneNumber));
         }
         
         UserFacade.addUser(newManager);
@@ -127,7 +150,7 @@ public class ManagerBean implements Serializable {
                     UserToUpdate.setUsername(newUsername);
                     UserToUpdate.setPassword(newPassword);
                     UserToUpdate.setEmail(newEmail);
-                    UserToUpdate.setPhoneNumber(newPhoneNumber);
+                    UserToUpdate.setPhoneNumber(formatPhoneNumber(newPhoneNumber));
 
                     // Save the changes to the database
                     UserFacade.updateUser(UserToUpdate);

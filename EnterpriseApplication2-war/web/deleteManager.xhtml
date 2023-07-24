@@ -28,19 +28,31 @@ and open the template in the editor.
     <p:button value="Go to Update Manager Page" outcome="updateManager" />
     
     <h2>Managers List</h2>
-    <h:dataTable id="managerTable" value="#{managerBean.managers}" var="manager">
-        <h:column>
-            <f:facet name="header">ID</f:facet>
-            #{manager.id}
-        </h:column>
-        <h:column>
-            <f:facet name="header">First Name</f:facet>
-            #{manager.firstName}
-        </h:column>
-        <h:column>
-            <f:facet name="header">Last Name</f:facet>
-            #{manager.lastName}
-        </h:column>
-    </h:dataTable>
+    <p:dataTable id="managerTable" value="#{managerBean.managers}" var="manager">
+            <p:column headerText="ID">
+                <h:outputText value="#{manager.id}" />
+            </p:column>
+            <p:column headerText="First Name">
+                <h:outputText value="#{manager.firstName}" />
+            </p:column>
+            <p:column headerText="Last Name">
+                <h:outputText value="#{manager.lastName}" />
+            </p:column>
+            <p:column headerText="Role">
+                <h:outputText value="#{manager.userType}" />
+            </p:column>
+            <p:column headerText="Username">
+                <h:outputText value="#{manager.username}" />
+            </p:column>
+            <p:column headerText="Password">
+                <h:outputText value="#{manager.password}" />
+            </p:column>
+            <p:column headerText="Email">
+                <h:outputText value="#{manager.email}" />
+            </p:column>
+            <p:column headerText="Phone Number">
+                <h:outputText value="#{manager.phoneNumber}" />
+            </p:column>
+        </p:dataTable>
 </h:body>
 </html>

@@ -35,7 +35,11 @@ and open the template in the editor.
             <p:inputText id="phoneNumber" value="#{managerBean.newManager.phoneNumber}" required="false" />
             
             <p:commandButton value="Add Manager" action="#{managerBean.addManager}" update="managerTable" />
+
         </p:panelGrid>
+            <ul>
+            <li>The email and phone number fields can be left empty if you want and the computer will generate them</li>
+            </ul>
     </h:form>
 
     <p:button value="Go to Delete Manager Page" outcome="deleteManager" />
