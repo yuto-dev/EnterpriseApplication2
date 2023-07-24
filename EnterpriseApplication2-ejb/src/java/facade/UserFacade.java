@@ -46,9 +46,9 @@ public class UserFacade {
         return query.getResultList();
     }
 
-    public List<User> getUsersByRole(String role) {
-        Query query = em.createQuery("SELECT u FROM User u WHERE u.role = :role");
-        query.setParameter("role", role);
+    public List<User> getUsersByRole(String userType) {
+        Query query = em.createQuery("SELECT u FROM User u WHERE u.userType = :userType");
+        query.setParameter("userType", userType);
         return query.getResultList();
     }
 

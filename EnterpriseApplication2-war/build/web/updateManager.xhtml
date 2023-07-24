@@ -26,20 +26,23 @@ and open the template in the editor.
             <p:column headerText="Last Name">
                 <h:outputText value="#{manager.lastName}" />
             </p:column>
+            <p:column headerText="Role">
+                <h:outputText value="#{manager.userType}" />
+            </p:column>
             <!-- Add other columns for other properties -->
             <p:column headerText="Action">
                 <p:commandButton value="Select" action="#{managerBean.setSelectedManager(manager)}" />
             </p:column>
             <p:column headerText="Apply">
-                <p:commandButton value="Apply" action="#{managerBean.updateManager}" />
+                <p:commandButton value="Apply" action="#{managerBean.updateManager(manager)}" update="managerTable" />
             </p:column>
         </p:dataTable>
 
         <p:commandButton value="Update Fields" update="managerTable" />
         
         <p:panel id="updateForm" visible="true">
-            <h:outputLabel for="idInput" value="ID:" />
-            <p:inputText id="idInput" value="#{managerBean.selectedManagerId}" />
+            <!--<h:outputLabel for="idInput" value="ID:" />
+            <p:inputText id="idInput" value="#{managerBean.selectedManagerId}" />-->
             <h:outputLabel for="firstInput" value="First Name:" />
             <p:inputText id="firstInput" value="#{managerBean.newFirstName}" />
             <h:outputLabel for="lastInput" value="Last Name:" />

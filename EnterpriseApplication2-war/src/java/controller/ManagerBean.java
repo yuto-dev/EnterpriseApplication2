@@ -25,65 +25,69 @@ public class ManagerBean implements Serializable {
     @EJB
     private UserFacade UserFacade;
 
-    private User newUser;
-    private List<User> Users;
+    private User newManager;
+    private List<User> managers;
     
-    private Long UserIdInput; //delete ID
-    private User selectedUser; //current User
-    private User tempUser;
+    private Long ManagerIdInput; //delete ID
+    private User selectedManager; //current User
     
-    private Long selectedUserId;
+    private Long selectedManagerId;
     private String newFirstName;
     private String newLastName;
 
     @PostConstruct
     public void init() {
-        newUser = new User();
-        selectedUser = new User();
-        tempUser = new User();
+        newManager = new User();
+        selectedManager = new User();
         
-        selectedUserId = null;
+        selectedManagerId = null;
         newFirstName = null;
         newLastName = null;
         
-        Users = UserFacade.getAllUsers(); // Calling the method to retrieve all Users
+        managers = UserFacade.getAllUsers(); // Calling the method to retrieve all Managers
     }
 
     // TODO CHANGE GETALLUSERS BACK TO GETROLE
     
     public void addManager() {
-        newUser.setUserType("M");
-        UserFacade.addUser(newUser);
-        newUser = new User(); // Clear the form after adding a User
-        Users = UserFacade.getAllUsers(); // Update the list of Users after adding a new one
+        newManager.setUserType("M");
+        UserFacade.addUser(newManager);
+        newManager = new User(); // Clear the form after adding a User
+        managers = UserFacade.getAllUsers(); // Update the list of Users after adding a new one
     }
     
-    public void updateManager() {
-        if (selectedUserId != null) {
-        User UserToUpdate = UserFacade.find(selectedUserId);
+    public void updateManager(User manager) {
+        System.out.println(manager);
+        setSelectedManager(manager);
+        System.out.println(selectedManager);
+        System.out.println(getSelectedManagerId());
+        selectedManagerId = getSelectedManagerId();
+        if (selectedManagerId != null) {
+            User UserToUpdate = UserFacade.find(selectedManagerId);
 
-            if (UserToUpdate != null) {
-                // Update the User's properties using values from the UI
-                UserToUpdate.setFirstName(newFirstName);
-                UserToUpdate.setLastName(newLastName);
+                if (UserToUpdate != null) {
+                    // Update the User's properties using values from the UI
+                    UserToUpdate.setId(getSelectedManagerId());
+                    UserToUpdate.setFirstName(newFirstName);
+                    UserToUpdate.setLastName(newLastName);
 
-                // Save the changes to the database
-                UserFacade.updateUser(UserToUpdate);
+                    // Save the changes to the database
+                    UserFacade.updateUser(UserToUpdate);
 
-                // Refresh the list of Users
-                Users = UserFacade.getUsersByRole("M");
-            } else {
-                // Handle the case when the User with the selected ID is not found
-                System.out.println("User with ID " + selectedUserId + " not found!");
-            }
+                    // Refresh the list of Users
+                    managers = UserFacade.getUsersByRole("M");
+                } else {
+                    // Handle the case when the User with the selected ID is not found
+                    System.out.println("User with ID " + selectedManagerId + " not found!");
+                }
         } else {
             System.out.println("Selected User ID is null");
         }
     }
 
     public void deleteManager() {
-        UserFacade.deleteUser(UserIdInput);
-        Users = UserFacade.getUsersByRole("M"); // Update the list of Users after deletion
+        UserFacade.deleteUser(ManagerIdInput);
+        managers = UserFacade.getAllUsers(); // Update the list of Users after deletion
     }
     
     public void deleteAllManagers() {
@@ -99,54 +103,51 @@ public class ManagerBean implements Serializable {
     }
 
     public List<User> getAllUsers() {
-        return Users;
+        return managers;
     }
 
 
     
     // Getters and setters
 
-    public User getNewUser() {
-        return newUser;
+    public User getNewManager() {
+        return newManager;
     }
 
-    public void setNewUser(User newUser) {
-        this.newUser = newUser;
+    public void setNewManager(User newManager) {
+        this.newManager = newManager;
     }
 
-    public List<User> getUsers() {
-        return Users;
+    public List<User> getManagers() {
+        return managers;
     }
     
-    public void setUsers(List<User> Users) {
-        this.Users = Users;
+    public void setManagers(List<User> Managers) {
+        this.managers = Managers;
     }
     
-    public Long getUserIdInput() {
-        return UserIdInput;
+    public Long getManagerIdInput() {
+        return ManagerIdInput;
     }
 
-    public void setUserIdInput(Long UserIdInput) {
-        this.UserIdInput = UserIdInput;
+    public void setManagerIdInput(Long ManagerIdInput) {
+        this.ManagerIdInput = ManagerIdInput;
     }
     
-    public User getSelectedUser() {
-        return selectedUser;
+    public User getSelectedManager() {
+        return selectedManager;
     }
 
-    public void setSelectedUser(User selectedUser) {
-        this.selectedUser = selectedUser;
-        System.out.println(selectedUser);
-        System.out.println(selectedUser.getFirstName());
-        System.out.println(selectedUser.getId());
+    public void setSelectedManager(User selectedManager) {
+        this.selectedManager = selectedManager;
     }
 
-    public Long getSelectedUserId() {
-        return selectedUserId;
+    public Long getSelectedManagerId() {
+        return selectedManagerId;
     }
 
-    public void setSelectedUserId(Long selectedUserId) {
-        this.selectedUserId = selectedUserId;
+    public void setSelectedManagerId(Long selectedManagerId) {
+        this.selectedManagerId = selectedManagerId;
     }
     
     public String getNewFirstName() {

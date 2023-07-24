@@ -17,10 +17,10 @@ and open the template in the editor.
     <h:form>
         <p:panelGrid columns="2">
             <h:outputLabel for="firstName" value="First Name:" />
-            <p:inputText id="firstName" value="#{managerBean.newUser.firstName}" required="true" />
+            <p:inputText id="firstName" value="#{managerBean.newManager.firstName}" required="true" />
 
             <h:outputLabel for="lastName" value="Last Name:" />
-            <p:inputText id="lastName" value="#{managerBean.newUser.lastName}" required="true" />
+            <p:inputText id="lastName" value="#{managerBean.newManager.lastName}" required="true" />
 
             <p:commandButton value="Add Manager" action="#{managerBean.addManager}" update="managerTable" />
         </p:panelGrid>
@@ -32,18 +32,18 @@ and open the template in the editor.
     <p:commandButton value="Delete All Managers" action="#{managerBean.deleteAllUsers}" update="managerTable" />
     
     <h2>Managers List</h2>
-    <h:dataTable id="managerTable" value="#{managerBean.users}" var="user">
+    <h:dataTable id="managerTable" value="#{managerBean.managers}" var="manager">
         <h:column>
             <f:facet name="header">ID</f:facet>
-            #{user.id}
+            #{manager.id}
         </h:column>
         <h:column>
             <f:facet name="header">First Name</f:facet>
-            #{user.firstName}
+            #{manager.firstName}
         </h:column>
         <h:column>
             <f:facet name="header">Last Name</f:facet>
-            #{user.lastName}
+            #{manager.lastName}
         </h:column>
     </h:dataTable>
 </h:body>
