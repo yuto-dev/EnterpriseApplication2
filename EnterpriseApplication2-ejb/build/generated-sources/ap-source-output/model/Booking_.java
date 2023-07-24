@@ -9,7 +9,7 @@ import model.Customer;
 import model.KitchenStaff;
 import model.Manager;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2023-07-24T14:20:50")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2023-07-24T15:08:08")
 @StaticMetamodel(Booking.class)
 public class Booking_ { 
 

@@ -35,6 +35,10 @@ public class ManagerBean implements Serializable {
     private Long selectedManagerId;
     private String newFirstName;
     private String newLastName;
+    private String newUsername;
+    private String newPassword;
+    private String newEmail;
+    private String newPhoneNumber;
 
     @PostConstruct
     public void init() {
@@ -44,6 +48,10 @@ public class ManagerBean implements Serializable {
         selectedManagerId = null;
         newFirstName = null;
         newLastName = null;
+        newUsername = null;
+        newPassword = null;
+        newEmail = null;
+        newPhoneNumber = null;
         
         managers = UserFacade.getAllUsers(); // Calling the method to retrieve all Managers
     }
@@ -68,11 +76,11 @@ public class ManagerBean implements Serializable {
     public void addManager() {
         newManager.setUserType("M");
         System.out.println("inside");
-        if (newManager.getEmail() == null || newManager.getEmail() == "") {
-            newManager.setEmail(newManager.getUsername()+"@email.com");
+        if (newManager.getEmail() == null || newManager.getEmail().trim().isEmpty()) {
+            newManager.setEmail(newManager.getUsername()+"@mail.com");
         }
         
-        if (newManager.getPhoneNumber()== null || newManager.getPhoneNumber() == "") {
+        if (newManager.getPhoneNumber()== null || newManager.getPhoneNumber().trim().isEmpty()) {
             String generatedPhoneNumber = generatePhoneNumber();
             newManager.setPhoneNumber(generatedPhoneNumber);
         }
@@ -94,8 +102,32 @@ public class ManagerBean implements Serializable {
                 if (UserToUpdate != null) {
                     // Update the User's properties using values from the UI
                     UserToUpdate.setId(getSelectedManagerId());
+                    
+                    if (newFirstName == null || newFirstName.trim().isEmpty()) {
+                        newFirstName = selectedManager.getFirstName();
+                    }
+                    if (newLastName == null || newLastName.trim().isEmpty()) {
+                        newLastName = selectedManager.getLastName();
+                    }
+                    if (newUsername == null || newUsername.trim().isEmpty()) {
+                        newUsername = selectedManager.getUsername();
+                    }
+                    if (newPassword == null || newPassword.trim().isEmpty()) {
+                        newPassword = selectedManager.getPassword();
+                    }
+                    if (newEmail == null || newEmail.trim().isEmpty()) {
+                        newEmail = selectedManager.getEmail();
+                    }
+                    if (newPhoneNumber == null || newPhoneNumber.trim().isEmpty()) {
+                        newPhoneNumber = selectedManager.getPhoneNumber();
+                    }
+                    
                     UserToUpdate.setFirstName(newFirstName);
                     UserToUpdate.setLastName(newLastName);
+                    UserToUpdate.setUsername(newUsername);
+                    UserToUpdate.setPassword(newPassword);
+                    UserToUpdate.setEmail(newEmail);
+                    UserToUpdate.setPhoneNumber(newPhoneNumber);
 
                     // Save the changes to the database
                     UserFacade.updateUser(UserToUpdate);
@@ -191,4 +223,37 @@ public class ManagerBean implements Serializable {
     public void setNewLastName(String newLastName) {
         this.newLastName = newLastName;
     }
+
+    public String getNewUsername() {
+        return newUsername;
+    }
+
+    public void setNewUsername(String newUsername) {
+        this.newUsername = newUsername;
+    }
+
+    public String getNewPassword() {
+        return newPassword;
+    }
+
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
+    }
+
+    public String getNewEmail() {
+        return newEmail;
+    }
+
+    public void setNewEmail(String newEmail) {
+        this.newEmail = newEmail;
+    }
+
+    public String getNewPhoneNumber() {
+        return newPhoneNumber;
+    }
+
+    public void setNewPhoneNumber(String newPhoneNumber) {
+        this.newPhoneNumber = newPhoneNumber;
+    }
+    
 }

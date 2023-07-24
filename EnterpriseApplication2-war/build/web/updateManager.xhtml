@@ -31,6 +31,18 @@ and open the template in the editor.
             <p:column headerText="Role">
                 <h:outputText value="#{manager.userType}" />
             </p:column>
+            <p:column headerText="Username">
+                <h:outputText value="#{manager.username}" />
+            </p:column>
+            <p:column headerText="Password">
+                <h:outputText value="#{manager.password}" />
+            </p:column>
+            <p:column headerText="Email">
+                <h:outputText value="#{manager.email}" />
+            </p:column>
+            <p:column headerText="Phone Number">
+                <h:outputText value="#{manager.phoneNumber}" />
+            </p:column>
             <!-- Add other columns for other properties -->
             <p:column headerText="Apply">
                 <p:commandButton value="Apply" action="#{managerBean.updateManager(manager)}" update="managerTable" />
@@ -46,12 +58,30 @@ and open the template in the editor.
         </ul>
         
         <p:panel id="updateForm" rendered="#{not empty managerBean.selectedManager}">
-            <h:outputLabel for="idInput" value="ID:" />
-            <p:inputText id="idInput" value="#{managerBean.selectedManagerId}" />
-            <h:outputLabel for="firstInput" value="First Name:" />
-            <p:inputText id="firstInput" value="#{managerBean.newFirstName}" />
-            <h:outputLabel for="lastInput" value="Last Name:" />
-            <p:inputText id="lastInput" value="#{managerBean.newLastName}" />
+            <h:panelGrid columns="1">
+                <h:outputLabel for="idInput" value="ID:" />
+                <p:inputText id="idInput" value="#{managerBean.selectedManagerId}" />
+            </h:panelGrid>
+
+            <h:panelGrid columns="2">
+                <h:outputLabel for="firstInput" value="First Name:" />
+                <p:inputText id="firstInput" value="#{managerBean.newFirstName}" />
+
+                <h:outputLabel for="lastInput" value="Last Name:" />
+                <p:inputText id="lastInput" value="#{managerBean.newLastName}" />
+                
+                <h:outputLabel for="usernameInput" value="Username:" />
+                <p:inputText id="usernameInput" value="#{managerBean.newUsername}" />
+                
+                <h:outputLabel for="passwordInput" value="Password:" />
+                <p:inputText id="passwordInput" value="#{managerBean.newPassword}" />
+                
+                <h:outputLabel for="emailInput" value="Email:" />
+                <p:inputText id="emailInput" value="#{managerBean.newEmail}" />
+                
+                <h:outputLabel for="phoneNumberInput" value="Phone Number:" />
+                <p:inputText id="phoneNumberInput" value="#{managerBean.newPhoneNumber}" />
+            </h:panelGrid>
         </p:panel>
         <!-- Update form -->
         
