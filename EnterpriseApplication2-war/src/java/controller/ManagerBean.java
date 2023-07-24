@@ -8,6 +8,7 @@ package controller;
 import facade.UserFacade;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Random;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
@@ -49,8 +50,33 @@ public class ManagerBean implements Serializable {
 
     // TODO CHANGE GETALLUSERS BACK TO GETROLE
     
+    
+    public static String generatePhoneNumber() {
+        Random random = new Random();
+        
+        // Generate the first two digits ("01")
+        StringBuilder phoneNumberBuilder = new StringBuilder("01");
+        
+        // Generate the remaining 8 digits
+        for (int i = 0; i < 8; i++) {
+            phoneNumberBuilder.append(random.nextInt(10));
+        }
+        
+        return phoneNumberBuilder.toString();
+    }
+    
     public void addManager() {
         newManager.setUserType("M");
+        System.out.println("inside");
+        if (newManager.getEmail() == null || newManager.getEmail() == "") {
+            newManager.setEmail(newManager.getUsername()+"@email.com");
+        }
+        
+        if (newManager.getPhoneNumber()== null || newManager.getPhoneNumber() == "") {
+            String generatedPhoneNumber = generatePhoneNumber();
+            newManager.setPhoneNumber(generatedPhoneNumber);
+        }
+        
         UserFacade.addUser(newManager);
         newManager = new User(); // Clear the form after adding a User
         managers = UserFacade.getAllUsers(); // Update the list of Users after adding a new one
@@ -93,7 +119,7 @@ public class ManagerBean implements Serializable {
     public void deleteAllManagers() {
         UserFacade.deleteAllManagers();
     }
-    
+    // DELTE LATER
     public void deleteAllUsers() {
         UserFacade.deleteAllUsers();
     }

@@ -21,7 +21,19 @@ and open the template in the editor.
 
             <h:outputLabel for="lastName" value="Last Name:" />
             <p:inputText id="lastName" value="#{managerBean.newManager.lastName}" required="true" />
-
+            
+            <h:outputLabel for="username" value="Username:" />
+            <p:inputText id="username" value="#{managerBean.newManager.username}" required="true" />
+            
+            <h:outputLabel for="password" value="Password:" />
+            <p:inputText id="password" value="#{managerBean.newManager.password}" required="true" />
+            
+            <h:outputLabel for="email" value="Email:" />
+            <p:inputText id="email" value="#{managerBean.newManager.email}" required="true" />
+            
+            <h:outputLabel for="phoneNumber" value="Phone Number:" />
+            <p:inputText id="phoneNumber" value="#{managerBean.newManager.phoneNumber}" required="true" />
+            
             <p:commandButton value="Add Manager" action="#{managerBean.addManager}" update="managerTable" />
         </p:panelGrid>
     </h:form>
@@ -29,7 +41,7 @@ and open the template in the editor.
     <p:button value="Go to Delete Manager Page" outcome="deleteManager" />
     <p:button value="Go to Update Manager Page" outcome="updateManager" />
     
-    <p:commandButton value="Delete All Managers" action="#{managerBean.deleteAllUsers}" update="managerTable" />
+    <p:commandButton value="Delete All Managers" action="#{managerBean.deleteAllManager}" update="managerTable" />
     
     <h2>Managers List</h2>
     <h:dataTable id="managerTable" value="#{managerBean.managers}" var="manager">
@@ -44,6 +56,26 @@ and open the template in the editor.
         <h:column>
             <f:facet name="header">Last Name</f:facet>
             #{manager.lastName}
+        </h:column>
+        <h:column>
+            <f:facet name="header">User Type</f:facet>
+            #{manager.userType}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Username</f:facet>
+            #{manager.username}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Password</f:facet>
+            #{manager.password}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Email</f:facet>
+            #{manager.email}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Phone Number</f:facet>
+            #{manager.phoneNumber}
         </h:column>
     </h:dataTable>
 </h:body>
