@@ -12,11 +12,8 @@ import java.util.Random;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.http.HttpSession;
 import model.User;
 
 /**
@@ -47,6 +44,8 @@ public class ManagerBean implements Serializable {
     private String newPassword;
     private String newEmail;
     private String newPhoneNumber;
+    
+    // TEST VARIABLES, DELETE LATER
     private int navigation;
     private Long testId;
 
@@ -65,7 +64,7 @@ public class ManagerBean implements Serializable {
         
         navigation = 2;
         
-        managers = UserFacade.getAllUsers(); // Calling the method to retrieve all Managers
+        managers = UserFacade.getUsersByRole("M"); // Calling the method to retrieve all Managers
     }
 
     // TODO CHANGE GETALLUSERS BACK TO GETROLE
@@ -82,7 +81,7 @@ public class ManagerBean implements Serializable {
     }
  */
     
-    
+    // Phone Number Generator and Format
     public static String generatePhoneNumber() {
         Random random = new Random();
         
@@ -120,34 +119,11 @@ public class ManagerBean implements Serializable {
         return formattedNumber.toString();
     }
 
-    public Long getTestId() {
-        return testId;
-    }
 
-    public void setTestId(Long testId) {
-        this.testId = testId;
-    }
     
-    public void checkSession() {
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        ExternalContext externalContext = facesContext.getExternalContext();
-        HttpSession httpSession = (HttpSession) externalContext.getSession(true);
-
-        String sessionID = httpSession.getId();
-        String UserSessionID = UserSessionBean.getSessionID();
-
-        if (sessionID != null && sessionID.equals(UserSessionID)) {
-            System.out.println("same");
-
-        } else {
-            System.out.println("diff");
-
-        }
-    }
     
     public void addManager() {
         System.out.println("marco");
-        checkSession();
         testId = UserSessionBean.getUserId();
         
         System.out.println(UserSessionBean.getUserId());
@@ -165,7 +141,7 @@ public class ManagerBean implements Serializable {
         
         UserFacade.addUser(newManager);
         newManager = new User(); // Clear the form after adding a User
-        managers = UserFacade.getAllUsers(); // Update the list of Users after adding a new one
+        managers = UserFacade.getUsersByRole("M"); // Update the list of Users after adding a new one
     }
     
     public void updateManager(User manager) {
@@ -223,15 +199,11 @@ public class ManagerBean implements Serializable {
 
     public void deleteManager() {
         UserFacade.deleteUser(ManagerIdInput);
-        managers = UserFacade.getAllUsers(); // Update the list of Users after deletion
+        managers = UserFacade.getUsersByRole("M"); // Update the list of Users after deletion
     }
     
     public void deleteAllManagers() {
         UserFacade.deleteAllManagers();
-    }
-    // DELTE LATER
-    public void deleteAllUsers() {
-        UserFacade.deleteAllUsers();
     }
 
     public User getManagerById(Long UserId) {
@@ -246,6 +218,14 @@ public class ManagerBean implements Serializable {
     
     // Getters and setters
 
+    public Long getTestId() {
+        return testId;
+    }
+
+    public void setTestId(Long testId) {
+        this.testId = testId;
+    }
+    
     public User getNewManager() {
         return newManager;
     }

@@ -80,7 +80,7 @@ public class LoginBean implements Serializable {
             // Redirect to the appropriate home page based on user type
             switch (matchedUser.getUserType()) {
                 case "M":
-                    return "addManager";
+                    return "managerMenu";
                 case "S":
                     return "deleteManager";
                 case "C":

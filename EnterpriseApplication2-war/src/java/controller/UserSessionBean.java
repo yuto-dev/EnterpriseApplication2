@@ -45,7 +45,7 @@ public class UserSessionBean implements Serializable {
         return userId != null;
     }
 
-    public void logout() {
+    public String logout() {
         userId = null;
         // Get the FacesContext and ExternalContext
         FacesContext facesContext = FacesContext.getCurrentInstance();
@@ -54,11 +54,6 @@ public class UserSessionBean implements Serializable {
         // Invalidate the session
         externalContext.invalidateSession();
 
-        // Redirect the user to the logout page or any other desired page
-        try {
-            externalContext.redirect("logout.xhtml");
-        } catch (Exception e) {
-            // Handle any exceptions that may occur during the redirect
-        }
+        return "login";
     }
 }
