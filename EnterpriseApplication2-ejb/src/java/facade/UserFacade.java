@@ -51,6 +51,22 @@ public class UserFacade {
         query.setParameter("userType", userType);
         return query.getResultList();
     }
+    
+    public User userLogin(String username, String password) {
+        System.out.println("1");
+        System.out.println(username);
+        System.out.println(password);
+        try {
+            System.out.println("2");
+            return em.createQuery("SELECT u FROM User u WHERE u.username = :username AND u.password = :password", User.class)
+                    .setParameter("username", username)
+                    .setParameter("password", password)
+                    .getSingleResult();
+        } catch (Exception e) {
+            System.out.println("3");
+            return null; // Return null if no user with the given credentials is found
+        }
+    }
 
     // Add other methods as needed for user management, such as findByUsername, findByEmail, etc.
     

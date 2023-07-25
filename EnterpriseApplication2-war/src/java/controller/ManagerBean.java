@@ -12,7 +12,11 @@ import java.util.Random;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpSession;
 import model.User;
 
 /**
@@ -22,10 +26,14 @@ import model.User;
 @Named
 @RequestScoped
 public class ManagerBean implements Serializable {
+    
 
     @EJB
     private UserFacade UserFacade;
-
+    
+    @Inject
+    private UserSessionBean UserSessionBean;
+    
     private User newManager;
     private List<User> managers;
     
@@ -39,6 +47,8 @@ public class ManagerBean implements Serializable {
     private String newPassword;
     private String newEmail;
     private String newPhoneNumber;
+    private int navigation;
+    private Long testId;
 
     @PostConstruct
     public void init() {
@@ -53,10 +63,24 @@ public class ManagerBean implements Serializable {
         newEmail = null;
         newPhoneNumber = null;
         
+        navigation = 2;
+        
         managers = UserFacade.getAllUsers(); // Calling the method to retrieve all Managers
     }
 
     // TODO CHANGE GETALLUSERS BACK TO GETROLE
+    /*
+    public String testNavigation() {
+        System.out.println("Entering testNavigation() method");
+        if (navigation == 1) {
+            System.out.println("Condition: navigation == 1");
+            return "pageOne";
+        } else {
+            System.out.println("Condition: navigation != 1");
+            return "pageTwo";
+        }
+    }
+ */
     
     
     public static String generatePhoneNumber() {
@@ -95,8 +119,39 @@ public class ManagerBean implements Serializable {
 
         return formattedNumber.toString();
     }
+
+    public Long getTestId() {
+        return testId;
+    }
+
+    public void setTestId(Long testId) {
+        this.testId = testId;
+    }
+    
+    public void checkSession() {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        ExternalContext externalContext = facesContext.getExternalContext();
+        HttpSession httpSession = (HttpSession) externalContext.getSession(true);
+
+        String sessionID = httpSession.getId();
+        String UserSessionID = UserSessionBean.getSessionID();
+
+        if (sessionID != null && sessionID.equals(UserSessionID)) {
+            System.out.println("same");
+
+        } else {
+            System.out.println("diff");
+
+        }
+    }
     
     public void addManager() {
+        System.out.println("marco");
+        checkSession();
+        testId = UserSessionBean.getUserId();
+        
+        System.out.println(UserSessionBean.getUserId());
+        System.out.println("polo");
         newManager.setUserType("M");
         System.out.println("inside");
         if (newManager.getEmail() == null || newManager.getEmail().trim().isEmpty()) {
@@ -277,6 +332,14 @@ public class ManagerBean implements Serializable {
 
     public void setNewPhoneNumber(String newPhoneNumber) {
         this.newPhoneNumber = newPhoneNumber;
+    }
+
+    public int getNavigation() {
+        return navigation;
+    }
+
+    public void setNavigation(int navigation) {
+        this.navigation = navigation;
     }
     
 }

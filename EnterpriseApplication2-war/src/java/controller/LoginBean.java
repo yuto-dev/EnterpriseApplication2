@@ -5,34 +5,96 @@
  */
 package controller;
 
+import facade.UserFacade;
 import java.io.Serializable;
-import javax.enterprise.context.SessionScoped;
+import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
+import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
+import model.User;
 
 /**
  *
  * @author Ryzen5
  */
 @Named
-@SessionScoped
+@RequestScoped
 public class LoginBean implements Serializable {
+    
+    @Inject
+    private UserSessionBean UserSessionBean;
 
+    @EJB
+    private UserFacade UserFacade;
+    
     private String username;
     private String password;
+    private Long loggedInUserId;
 
-    // You can implement proper authentication and user validation logic here
-    public String login() {
-        // For demonstration purposes, let's assume a simple username and password
-        if ("admin".equals(username) && "admin123".equals(password)) {
-            // Add logic to set user roles or other necessary data in the session
-            return "home"; // Redirect to home page after successful login
-        } else {
-            // Display login failure message
-            return null; // Stay on the same page (login.xhtml) for unsuccessful login
-        }
+    @PostConstruct
+    public void init() {
+        loggedInUserId = null;
+        username = null;
+        password = null;
     }
 
-    // Getters and setters for username and password
-    // ...
+    public String getUsername() {
+        return username;
+    }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Long getLoggedInUserId() {
+        return loggedInUserId;
+    }
+
+    public void testPrint() {
+        System.out.println("in in");
+    }
+    
+    public String login() {
+        System.out.println(username);
+        System.out.println("in");
+        // Find the user with the matching credentials
+        User matchedUser = UserFacade.userLogin(username, password);
+
+        if (matchedUser != null) {
+            System.out.println(matchedUser.getId());
+            loggedInUserId = matchedUser.getId();
+            UserSessionBean.setUserId(matchedUser.getId());
+
+
+            // Redirect to the appropriate home page based on user type
+            switch (matchedUser.getUserType()) {
+                case "M":
+                    return "addManager";
+                case "S":
+                    return "deleteManager";
+                case "C":
+                    return "updateManager";
+                default:
+                    // Unknown user type, handle as needed
+                    return "unknownUserType?faces-redirect=true";
+            }
+
+        } else {
+            System.out.println("waduh");
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid credentials", null));
+            return null;
+        }
+    }
 }

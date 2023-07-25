@@ -40,10 +40,12 @@ and open the template in the editor.
             <ul>
             <li>The email and phone number fields can be left empty if you want and the computer will generate them</li>
             </ul>
+        
     </h:form>
-
+    
     <p:button value="Go to Delete Manager Page" outcome="deleteManager" />
     <p:button value="Go to Update Manager Page" outcome="updateManager" />
+    
     
     <p:commandButton value="Delete All Managers" action="#{managerBean.deleteAllManagers}" update="managerTable" />
     
