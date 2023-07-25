@@ -7,7 +7,7 @@ package controller;
 
 import java.io.Serializable;
 import java.util.UUID;
-import javax.faces.bean.SessionScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
