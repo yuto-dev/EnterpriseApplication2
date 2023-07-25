@@ -34,6 +34,9 @@ public class ManagerBean implements Serializable {
     private User newManager;
     private List<User> managers;
     
+    private User newKitchenStaff;
+    private List<User> kitchenStaffs;
+    
     private Long ManagerIdInput; //delete ID
     private User selectedManager; //current User
     
@@ -52,9 +55,14 @@ public class ManagerBean implements Serializable {
     @PostConstruct
     public void init() {
         newManager = new User();
-        selectedManager = new User();
+        managers = UserFacade.getUsersByRole("M"); // Calling the method to retrieve all Managers
         
+        selectedManager = new User();
         selectedManagerId = null;
+        
+        newKitchenStaff = new User(); // new instance for creation
+        kitchenStaffs = UserFacade.getUsersByRole("S");
+        
         newFirstName = null;
         newLastName = null;
         newUsername = null;
@@ -64,7 +72,7 @@ public class ManagerBean implements Serializable {
         
         navigation = 2;
         
-        managers = UserFacade.getUsersByRole("M"); // Calling the method to retrieve all Managers
+        
     }
 
     // TODO CHANGE GETALLUSERS BACK TO GETROLE
@@ -120,7 +128,10 @@ public class ManagerBean implements Serializable {
     }
 
 
-    
+    // 
+    // MANAGER
+    // CRUD
+    //
     
     public void addManager() {
         System.out.println("marco");
@@ -209,14 +220,48 @@ public class ManagerBean implements Serializable {
     public User getManagerById(Long UserId) {
         return UserFacade.find(UserId);
     }
-
-    public List<User> getAllUsers() {
-        return managers;
+    
+    // 
+    // KITCHEN
+    // STAFF
+    // CRUD
+    //
+    
+    public void addKitchenStaff() {
+        
+        newKitchenStaff.setUserType("S");
+        if (newKitchenStaff.getEmail() == null || newKitchenStaff.getEmail().trim().isEmpty()) {
+            newKitchenStaff.setEmail(newKitchenStaff.getUsername()+"@mail.com");
+        }
+    
+        if (newKitchenStaff.getPhoneNumber()== null || newKitchenStaff.getPhoneNumber().trim().isEmpty()) {
+            String generatedPhoneNumber = generatePhoneNumber();
+            newKitchenStaff.setPhoneNumber(formatPhoneNumber(generatedPhoneNumber));
+        }
+    
+        UserFacade.addUser(newKitchenStaff);
+        newKitchenStaff = new User(); // Clear the form after adding a User
+        kitchenStaffs = UserFacade.getUsersByRole("S"); // Update the list of Users after adding a new one
     }
-
-
+        
     
     // Getters and setters
+
+    public User getNewKitchenStaff() {
+        return newKitchenStaff;
+    }
+
+    public void setNewKitchenStaff(User newKitchenStaff) {    
+        this.newKitchenStaff = newKitchenStaff;
+    }
+
+    public List<User> getKitchenStaffs() {
+        return kitchenStaffs;
+    }
+ 
+    public void setKitchenStaffs(List<User> kitchenStaffs) {
+        this.kitchenStaffs = kitchenStaffs;
+    }
 
     public Long getTestId() {
         return testId;
