@@ -18,7 +18,7 @@ and open the template in the editor.
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-image: url('assets/red.jpg'); /* Background image */
+            background-image: url('assets/blue.jpg'); /* Background image */
             background-size: cover; /* Make sure the image covers the entire panel */
         }
 
@@ -55,7 +55,7 @@ and open the template in the editor.
         <div class="menu-panel">
             <h:form>
             <p:commandButton value="Manager" action="#{linkBean.getLinkManagerCrud}" styleClass="menu-button" />
-            <p:commandButton value="Staff" action="#{linkBean.getLinkStaffCrud}" styleClass="menu-button" />
+            <p:commandButton value="Staff" action="#{linkBean.getLinkKitchenStaffCrud}" styleClass="menu-button" />
             <p:commandButton value="Customer" action="#{linkBean.getLinkCustomerCrud}" styleClass="menu-button" />
             <p:commandButton value="Logout" action="#{userSessionBean.logout}" styleClass="menu-button" />
             </h:form>
