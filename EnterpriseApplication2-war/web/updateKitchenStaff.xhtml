@@ -78,6 +78,11 @@ and open the template in the editor.
             cursor: pointer;
             transition: background-color 0.3s;
         }
+        
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
 
         .apply-button:hover {
             background-color: #0056b3;
@@ -87,7 +92,8 @@ and open the template in the editor.
 
 <h:body>
     <div class="container">
-        <h2>Update Manager</h2>
+        <h:form>
+        <h2>Update Kitchen Staff</h2>
         
 
         <h2>Instructions:</h2>
@@ -99,10 +105,10 @@ and open the template in the editor.
             <li>The apply button will not work if the entered ID and the ID of the corresponding manager do not match</li>
         </ul>
 
-        <p:panel id="updateForm" class="update-form">
+        <p:panel id="updateForm"  rendered="#{not empty managerBean.selectedKitchenStaff}" class="update-form">
             <h:panelGrid columns="2">
                 <h:outputLabel for="idInput" value="ID:" />
-                <p:inputText id="idInput" value="#{managerBean.selectedManagerId}" />
+                <p:inputText id="idInput" value="#{managerBean.selectedKitchenStaffId}" />
             </h:panelGrid>
 
             <h:panelGrid columns="2">
@@ -126,37 +132,42 @@ and open the template in the editor.
             </h:panelGrid>
         </p:panel>
         
-        <p:dataTable id="managerTable" value="#{managerBean.managers}" var="manager">
+        <div class="button-container">
+            <h:form>
+            <p:commandButton value="Back" action="#{linkBean.getLinkKitchenStaffCrud}" style="margin: 0 auto; display: block;" />
+            </h:form>
+        </div>
+        
+        <p:dataTable id="kitchenStaffTable" value="#{managerBean.kitchenStaffs}" var="kitchenStaff">
             <p:column headerText="ID">
-                <h:outputText value="#{manager.id}" />
+                <h:outputText value="#{kitchenStaff.id}" />
             </p:column>
             <p:column headerText="First Name">
-                <h:outputText value="#{manager.firstName}" />
+                <h:outputText value="#{kitchenStaff.firstName}" />
             </p:column>
             <p:column headerText="Last Name">
-                <h:outputText value="#{manager.lastName}" />
+                <h:outputText value="#{kitchenStaff.lastName}" />
             </p:column>
             <p:column headerText="Role">
-                <h:outputText value="#{manager.userType}" />
+                <h:outputText value="#{kitchenStaff.userType}" />
             </p:column>
             <p:column headerText="Username">
-                <h:outputText value="#{manager.username}" />
+                <h:outputText value="#{kitchenStaff.username}" />
             </p:column>
             <p:column headerText="Password">
-                <h:outputText value="#{manager.password}" />
+                <h:outputText value="#{kitchenStaff.password}" />
             </p:column>
             <p:column headerText="Email">
-                <h:outputText value="#{manager.email}" />
+                <h:outputText value="#{kitchenStaff.email}" />
             </p:column>
             <p:column headerText="Phone Number">
-                <h:outputText value="#{manager.phoneNumber}" />
+                <h:outputText value="#{kitchenStaff.phoneNumber}" />
             </p:column>
-            <!-- Add other columns for other properties -->
             <p:column headerText="Apply">
-                <p:commandButton value="Apply" action="#{managerBean.updateManager(manager)}" update="managerTable" styleClass="apply-button" />
+                <p:commandButton value="Apply" action="#{managerBean.updateKitchenStaff(kitchenStaff)}" update="kitchenStaffTable" styleClass="apply-button" />
             </p:column>
         </p:dataTable>
-        <!-- Update form -->
+        </h:form>
     </div>
 </h:body>
 </html>

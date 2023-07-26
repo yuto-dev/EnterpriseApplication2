@@ -41,8 +41,11 @@ public class ManagerBean implements Serializable {
     private User selectedManager; //current User
     
     private Long kitchenStaffIdInput; //delete ID
+    private User selectedKitchenStaff;
     
     private Long selectedManagerId;
+    private Long selectedKitchenStaffId;
+    
     private String newFirstName;
     private String newLastName;
     private String newUsername;
@@ -61,6 +64,9 @@ public class ManagerBean implements Serializable {
         
         selectedManager = new User();
         selectedManagerId = null;
+        
+        selectedKitchenStaff = new User();
+        selectedKitchenStaffId = null;
         
         newKitchenStaff = new User(); // new instance for creation
         kitchenStaffs = UserFacade.getUsersByRole("S");
@@ -246,6 +252,59 @@ public class ManagerBean implements Serializable {
         kitchenStaffs = UserFacade.getUsersByRole("S"); // Update the list of Users after adding a new one
     }
     
+    public void updateKitchenStaff(User kitchenStaff) {
+        
+        setSelectedKitchenStaff(kitchenStaff);
+        
+        selectedKitchenStaffId = getSelectedKitchenStaffId();
+
+        if (selectedKitchenStaffId != null) {
+            User UserToUpdate = UserFacade.find(selectedKitchenStaffId);
+
+                if (UserToUpdate != null) {
+                    // Update the User's properties using values from the UI
+                    UserToUpdate.setId(getSelectedKitchenStaffId());
+                    
+                    if (newFirstName == null || newFirstName.trim().isEmpty()) {
+                        newFirstName = selectedKitchenStaff.getFirstName();
+                    }
+                    if (newLastName == null || newLastName.trim().isEmpty()) {
+                        newLastName = selectedKitchenStaff.getLastName();
+                    }
+                    if (newUsername == null || newUsername.trim().isEmpty()) {
+                        newUsername = selectedKitchenStaff.getUsername();
+                    }
+                    if (newPassword == null || newPassword.trim().isEmpty()) {
+                        newPassword = selectedKitchenStaff.getPassword();
+                    }
+                    if (newEmail == null || newEmail.trim().isEmpty()) {
+                        newEmail = selectedKitchenStaff.getEmail();
+                    }
+                    if (newPhoneNumber == null || newPhoneNumber.trim().isEmpty()) {
+                        newPhoneNumber = selectedKitchenStaff.getPhoneNumber();
+                    }
+                    
+                    UserToUpdate.setFirstName(newFirstName);
+                    UserToUpdate.setLastName(newLastName);
+                    UserToUpdate.setUsername(newUsername);
+                    UserToUpdate.setPassword(newPassword);
+                    UserToUpdate.setEmail(newEmail);
+                    UserToUpdate.setPhoneNumber(formatPhoneNumber(newPhoneNumber));
+
+                    // Save the changes to the database
+                    UserFacade.updateUser(UserToUpdate);
+
+                    // Refresh the list of Users
+                    kitchenStaffs = UserFacade.getUsersByRole("S");
+                } else {
+                    // Handle the case when the User with the selected ID is not found
+                    System.out.println("User with ID " + selectedKitchenStaffId + " not found!");
+                }
+        } else {
+            System.out.println("Selected User ID is null");
+        }
+    }
+    
     public void deleteKitchenStaff() {
         UserFacade.deleteUser(kitchenStaffIdInput);
         kitchenStaffs = UserFacade.getUsersByRole("S"); // Update the list of Users after deletion
@@ -253,6 +312,24 @@ public class ManagerBean implements Serializable {
         
     
     // Getters and setters
+
+    public User getSelectedKitchenStaff() {
+        return selectedKitchenStaff;
+    }
+
+    public void setSelectedKitchenStaff(User selectedKitchenStaff) {
+        this.selectedKitchenStaff = selectedKitchenStaff;
+    }
+
+    public Long getSelectedKitchenStaffId() {
+        return selectedKitchenStaffId;
+    }
+
+    public void setSelectedKitchenStaffId(Long selectedKitchenStaffId) {
+        this.selectedKitchenStaffId = selectedKitchenStaffId;
+    }
+    
+    
 
     public Long getKitchenStaffIdInput() {
         return kitchenStaffIdInput;
