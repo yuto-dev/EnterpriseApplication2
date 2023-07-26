@@ -40,6 +40,8 @@ public class ManagerBean implements Serializable {
     private Long ManagerIdInput; //delete ID
     private User selectedManager; //current User
     
+    private Long kitchenStaffIdInput; //delete ID
+    
     private Long selectedManagerId;
     private String newFirstName;
     private String newLastName;
@@ -243,10 +245,25 @@ public class ManagerBean implements Serializable {
         newKitchenStaff = new User(); // Clear the form after adding a User
         kitchenStaffs = UserFacade.getUsersByRole("S"); // Update the list of Users after adding a new one
     }
+    
+    public void deleteKitchenStaff() {
+        UserFacade.deleteUser(kitchenStaffIdInput);
+        kitchenStaffs = UserFacade.getUsersByRole("S"); // Update the list of Users after deletion
+    }
         
     
     // Getters and setters
 
+    public Long getKitchenStaffIdInput() {
+        return kitchenStaffIdInput;
+    }
+
+    public void setKitchenStaffIdInput(Long kitchenStaffIdInput) {
+        this.kitchenStaffIdInput = kitchenStaffIdInput;
+    }
+
+    
+    
     public User getNewKitchenStaff() {
         return newKitchenStaff;
     }

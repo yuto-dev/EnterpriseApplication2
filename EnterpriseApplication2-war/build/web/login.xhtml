@@ -12,21 +12,83 @@ and open the template in the editor.
 
 <h:head>
     <title>Login Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f1f1f1;
+            margin: 0;
+            padding: 0;
+        }
+
+        .login-container {
+            width: 300px;
+            margin: 150px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-header {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-size: 14px;
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .login-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </h:head>
 
 <h:body>
-    <h:form>
-        <p:panel header="Login">
-            <p:messages id="messages" showDetail="true"/>
+    <div class="login-container">
+        <h2 class="login-header">Login</h2>
+        <h:form>
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <p:inputText id="username" value="#{loginBean.username}" />
+            </div>
 
-            <h:outputLabel for="username" value="Username:" />
-            <p:inputText id="username" value="#{loginBean.username}" />
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <p:password id="password" value="#{loginBean.password}" />
+            </div>
 
-            <h:outputLabel for="password" value="Password:" />
-            <p:password id="password" value="#{loginBean.password}" />
-
-            <p:commandButton value="Login" action="#{loginBean.login}" />
-        </p:panel>
-    </h:form>
+            <p:commandButton value="Login" action="#{loginBean.login}" styleClass="login-button" />
+        </h:form>
+    </div>
 </h:body>
+
 </html>

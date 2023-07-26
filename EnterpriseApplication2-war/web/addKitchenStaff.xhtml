@@ -88,22 +88,21 @@ and open the template in the editor.
 
                     <h:outputLabel for="phoneNumber" value="Phone Number:" />
                     <p:inputText id="phoneNumber" value="#{managerBean.newKitchenStaff.phoneNumber}" required="false" />
-
-                    <p:column colspan="2">
-                    <p:commandButton value="Add Kitchen Staff" action="#{managerBean.addKitchenStaff}" update="kitchenStaffTable" />
-                    </p:column>
                     
                 </p:panelGrid>
                 <ul class="info-list">
                     <li>The email and phone number fields can be left empty if you want and the computer will generate them</li>
                 </ul>
+                
+                <p:commandButton value="Add Kitchen Staff" action="#{managerBean.addKitchenStaff}" update="kitchenStaffTable" style="margin: 0 auto; display: block;" />
 
             </h:form>
         </div>
 
         <div class="button-container">
-            <button type="button" class="btn" onclick="window.location.href='deleteManager.xhtml'">Go to Delete Manager Page</button>
-            <button type="button" class="btn" onclick="window.location.href='updateManager.xhtml'">Go to Update Manager Page</button>
+            <h:form>
+            <p:commandButton value="Back" action="#{linkBean.getLinkKitchenStaffCrud}" style="margin: 0 auto; display: block;" />
+            </h:form>
         </div>
 
         <h2>Kitchen Staff List</h2>
