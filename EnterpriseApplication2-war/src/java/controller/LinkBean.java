@@ -17,6 +17,8 @@ import javax.inject.Named;
 @RequestScoped
 public class LinkBean {
     
+    private String linkLogin;
+    
     private String linkManagerMenu;
     
     private String linkManagerCrud;
@@ -34,8 +36,15 @@ public class LinkBean {
     private String linkDeleteCustomer;
     private String linkUpdateCustomer;
     
+    // STAFF
+    
+    private String linkKitchenStaffMenu;
+    private String linkEditKitchenStaff;
+    
     @PostConstruct
     public void init() {
+        
+        linkLogin = "login";
         
         linkManagerCrud = "managerCrud";
         linkManagerMenu = "managerMenu";
@@ -52,7 +61,20 @@ public class LinkBean {
         linkAddCustomer = "addCustomer";
         linkDeleteCustomer = "deleteCustomer";
         linkUpdateCustomer = "updateCustomer";
+        
+        // STAFF
+        
+        linkKitchenStaffMenu = "kitchenStaffMenu";
+        linkEditKitchenStaff = "editKitchenStaff";
+        
+    }
 
+    public String getLinkLogin() {
+        return linkLogin;
+    }
+
+    public void setLinkLogin(String linkLogin) {
+        this.linkLogin = linkLogin;
     }
 
     public String getLinkManagerCrud() {
@@ -106,5 +128,23 @@ public class LinkBean {
     public String getLinkUpdateCustomer() {
         return linkUpdateCustomer;
     }
+
+    public String getLinkKitchenStaffMenu() {
+        return linkKitchenStaffMenu;
+    }
+
+    public void setLinkKitchenStaffMenu(String linkKitchenStaffMenu) {
+        this.linkKitchenStaffMenu = linkKitchenStaffMenu;
+    }
+
+    public String getLinkEditKitchenStaff() {
+        return linkEditKitchenStaff;
+    }
+
+    public void setLinkEditKitchenStaff(String linkEditKitchenStaff) {
+        this.linkEditKitchenStaff = linkEditKitchenStaff;
+    }
+    
+    
     
 }

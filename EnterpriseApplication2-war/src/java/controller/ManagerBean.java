@@ -37,14 +37,21 @@ public class ManagerBean implements Serializable {
     private User newKitchenStaff;
     private List<User> kitchenStaffs;
     
-    private Long ManagerIdInput; //delete ID
+    private User newCustomer;
+    private List<User> customers;
+    
+    private Long managerIdInput; //delete ID
     private User selectedManager; //current User
     
     private Long kitchenStaffIdInput; //delete ID
     private User selectedKitchenStaff;
     
+    private Long customerIdInput;
+    private User selectedCustomer;
+    
     private Long selectedManagerId;
     private Long selectedKitchenStaffId;
+    private Long selectedCustomerId;
     
     private String newFirstName;
     private String newLastName;
@@ -62,14 +69,20 @@ public class ManagerBean implements Serializable {
         newManager = new User();
         managers = UserFacade.getUsersByRole("M"); // Calling the method to retrieve all Managers
         
+        newKitchenStaff = new User(); // new instance for creation
+        kitchenStaffs = UserFacade.getUsersByRole("S");
+        
+        newCustomer = new User();
+        customers = UserFacade.getUsersByRole("C");
+        
         selectedManager = new User();
         selectedManagerId = null;
         
         selectedKitchenStaff = new User();
         selectedKitchenStaffId = null;
         
-        newKitchenStaff = new User(); // new instance for creation
-        kitchenStaffs = UserFacade.getUsersByRole("S");
+        selectedCustomer = new User();
+        selectedCustomerId = null;
         
         newFirstName = null;
         newLastName = null;
@@ -217,7 +230,7 @@ public class ManagerBean implements Serializable {
     }
 
     public void deleteManager() {
-        UserFacade.deleteUser(ManagerIdInput);
+        UserFacade.deleteUser(managerIdInput);
         managers = UserFacade.getUsersByRole("M"); // Update the list of Users after deletion
     }
     
@@ -307,12 +320,135 @@ public class ManagerBean implements Serializable {
     
     public void deleteKitchenStaff() {
         UserFacade.deleteUser(kitchenStaffIdInput);
-        kitchenStaffs = UserFacade.getUsersByRole("S"); // Update the list of Users after deletion
+        kitchenStaffs = UserFacade.getUsersByRole("C"); // Update the list of Users after deletion
     }
+    
+    //
+    // CUSTOMER
+    // CRUD
+    //
         
+    public void addCustomer() {
+        
+        newCustomer.setUserType("C");
+        if (newCustomer.getEmail() == null || newCustomer.getEmail().trim().isEmpty()) {
+            newCustomer.setEmail(newCustomer.getUsername()+"@mail.com");
+        }
+    
+        if (newCustomer.getPhoneNumber()== null || newCustomer.getPhoneNumber().trim().isEmpty()) {
+            String generatedPhoneNumber = generatePhoneNumber();
+            newCustomer.setPhoneNumber(formatPhoneNumber(generatedPhoneNumber));
+        }
+    
+        UserFacade.addUser(newCustomer);
+        newCustomer = new User(); // Clear the form after adding a User
+        customers = UserFacade.getUsersByRole("C"); // Update the list of Users after adding a new one
+    }
+    
+    public void updateCustomer(User customer) {
+        
+        setSelectedCustomer(customer);
+        
+        selectedCustomerId = getSelectedCustomerId();
+
+        if (selectedCustomerId != null) {
+            User UserToUpdate = UserFacade.find(selectedCustomerId);
+
+                if (UserToUpdate != null) {
+                    // Update the User's properties using values from the UI
+                    UserToUpdate.setId(getSelectedCustomerId());
+                    
+                    if (newFirstName == null || newFirstName.trim().isEmpty()) {
+                        newFirstName = selectedCustomer.getFirstName();
+                    }
+                    if (newLastName == null || newLastName.trim().isEmpty()) {
+                        newLastName = selectedCustomer.getLastName();
+                    }
+                    if (newUsername == null || newUsername.trim().isEmpty()) {
+                        newUsername = selectedCustomer.getUsername();
+                    }
+                    if (newPassword == null || newPassword.trim().isEmpty()) {
+                        newPassword = selectedCustomer.getPassword();
+                    }
+                    if (newEmail == null || newEmail.trim().isEmpty()) {
+                        newEmail = selectedCustomer.getEmail();
+                    }
+                    if (newPhoneNumber == null || newPhoneNumber.trim().isEmpty()) {
+                        newPhoneNumber = selectedCustomer.getPhoneNumber();
+                    }
+                    
+                    UserToUpdate.setFirstName(newFirstName);
+                    UserToUpdate.setLastName(newLastName);
+                    UserToUpdate.setUsername(newUsername);
+                    UserToUpdate.setPassword(newPassword);
+                    UserToUpdate.setEmail(newEmail);
+                    UserToUpdate.setPhoneNumber(formatPhoneNumber(newPhoneNumber));
+
+                    // Save the changes to the database
+                    UserFacade.updateUser(UserToUpdate);
+
+                    // Refresh the list of Users
+                    customers = UserFacade.getUsersByRole("S");
+                } else {
+                    // Handle the case when the User with the selected ID is not found
+                    System.out.println("User with ID " + selectedCustomerId + " not found!");
+                }
+        } else {
+            System.out.println("Selected User ID is null");
+        }
+    }
+    
+    public void deleteCustomer() {
+        UserFacade.deleteUser(customerIdInput);
+        customers = UserFacade.getUsersByRole("C"); // Update the list of Users after deletion
+    }
     
     // Getters and setters
 
+    public User getSelectedCustomer() {
+        return selectedCustomer;
+    }
+
+    public void setSelectedCustomer(User selectedCustomer) {
+        this.selectedCustomer = selectedCustomer;
+    }
+
+    public Long getSelectedCustomerId() {
+        return selectedCustomerId;
+    }
+
+    public void setSelectedCustomerId(Long selectedCustomerId) {
+        this.selectedCustomerId = selectedCustomerId;
+    }
+
+    
+    
+    public Long getCustomerIdInput() {
+        return customerIdInput;
+    }
+
+    public void setCustomerIdInput(Long customerIdInput) {
+        this.customerIdInput = customerIdInput;
+    }
+
+    public User getNewCustomer() {
+        return newCustomer;
+    }
+
+    public void setNewCustomer(User newCustomer) {
+        this.newCustomer = newCustomer;
+    }
+
+    public List<User> getCustomers() {
+        return customers;
+    }
+
+    public void setCustomers(List<User> customers) {
+        this.customers = customers;
+    }
+
+    
+    
     public User getSelectedKitchenStaff() {
         return selectedKitchenStaff;
     }
@@ -382,11 +518,11 @@ public class ManagerBean implements Serializable {
     }
     
     public Long getManagerIdInput() {
-        return ManagerIdInput;
+        return managerIdInput;
     }
 
     public void setManagerIdInput(Long ManagerIdInput) {
-        this.ManagerIdInput = ManagerIdInput;
+        this.managerIdInput = ManagerIdInput;
     }
     
     public User getSelectedManager() {

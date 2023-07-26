@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+    <title>Update Manager</title>
+    <style>
+        /* Add your custom CSS styles here */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f1f1f1;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            margin-top: 30px;
+            font-weight: bold;
+        }
+
+        ul {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+
+        .update-form {
+            margin-top: 30px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            text-align: center;
+
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-size: 14px;
+        }
+
+        .apply-button {
+            width: 100px;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .button-container {
+            text-align: center;
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+
+        .apply-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</h:head>
+
+<h:body>
+    <div class="container">
+        <h:form>
+        <h2>Update Customer</h2>
+        
+
+        <h2>Instructions:</h2>
+        <ul>
+            <li>Enter the ID of the manager to be modified</li>
+            <li>Enter the new first name and last name to be updated</li>
+            <li>Click the apply button in the corresponding manager row to update the details</li>
+            <li>Fields for data that do not need to be modified can be left empty</li>
+            <li>The apply button will not work if the entered ID and the ID of the corresponding manager do not match</li>
+        </ul>
+
+        <p:panel id="updateForm"  rendered="#{not empty managerBean.selectedCustomer}" class="update-form">
+            <h:panelGrid columns="2">
+                <h:outputLabel for="idInput" value="ID:" />
+                <p:inputText id="idInput" value="#{managerBean.selectedCustomerId}" />
+            </h:panelGrid>
+
+            <h:panelGrid columns="2">
+                <h:outputLabel for="firstInput" value="First Name:" />
+                <p:inputText id="firstInput" value="#{managerBean.newFirstName}" />
+
+                <h:outputLabel for="lastInput" value="Last Name:" />
+                <p:inputText id="lastInput" value="#{managerBean.newLastName}" />
+                
+                <h:outputLabel for="usernameInput" value="Username:" />
+                <p:inputText id="usernameInput" value="#{managerBean.newUsername}" />
+                
+                <h:outputLabel for="passwordInput" value="Password:" />
+                <p:inputText id="passwordInput" value="#{managerBean.newPassword}" />
+                
+                <h:outputLabel for="emailInput" value="Email:" />
+                <p:inputText id="emailInput" value="#{managerBean.newEmail}" />
+                
+                <h:outputLabel for="phoneNumberInput" value="Phone Number:" />
+                <p:inputText id="phoneNumberInput" value="#{managerBean.newPhoneNumber}" />
+            </h:panelGrid>
+        </p:panel>
+        
+        <div class="button-container">
+            <h:form>
+            <p:commandButton value="Back" action="#{linkBean.getLinkCustomerCrud}" style="margin: 0 auto; display: block;" />
+            </h:form>
+        </div>
+        
+        <p:dataTable id="customerTable" value="#{managerBean.customers}" var="customer">
+            <p:column headerText="ID">
+                <h:outputText value="#{customer.id}" />
+            </p:column>
+            <p:column headerText="First Name">
+                <h:outputText value="#{customer.firstName}" />
+            </p:column>
+            <p:column headerText="Last Name">
+                <h:outputText value="#{customer.lastName}" />
+            </p:column>
+            <p:column headerText="Role">
+                <h:outputText value="#{customer.userType}" />
+            </p:column>
+            <p:column headerText="Username">
+                <h:outputText value="#{customer.username}" />
+            </p:column>
+            <p:column headerText="Password">
+                <h:outputText value="#{customer.password}" />
+            </p:column>
+            <p:column headerText="Email">
+                <h:outputText value="#{customer.email}" />
+            </p:column>
+            <p:column headerText="Phone Number">
+                <h:outputText value="#{customer.phoneNumber}" />
+            </p:column>
+            <p:column headerText="Apply">
+                <p:commandButton value="Apply" action="#{managerBean.updateCustomer(customer)}" update="customerTable" styleClass="apply-button" />
+            </p:column>
+        </p:dataTable>
+        </h:form>
+    </div>
+</h:body>
+</html>
+

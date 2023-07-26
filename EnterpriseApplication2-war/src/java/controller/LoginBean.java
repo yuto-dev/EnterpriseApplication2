@@ -82,7 +82,7 @@ public class LoginBean implements Serializable {
                 case "M":
                     return "managerMenu";
                 case "S":
-                    return "deleteManager";
+                    return "kitchenStaffMenu";
                 case "C":
                     return "updateManager";
                 default:

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+    <title>Add Manager</title>
+    <style>
+        /* Add your custom CSS styles here */
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+        }
+
+        .form-container h2 {
+            margin-top: 30px;
+        }
+
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .btn {
+            width: 200px;
+            height: 40px;
+            margin: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .info-list {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+    </style>
+</h:head>
+<h:body>
+    <div class="main-menu">
+        <div class="form-container">
+            <h1>Add Customer</h1>
+            <h:form>
+                <h2>Customer Information</h2>
+                <p:panelGrid columns="2" columnClasses="label-column, input-column">
+                    <h:outputLabel for="firstName" value="First Name:" />
+                    <p:inputText id="firstName" value="#{managerBean.newCustomer.firstName}" required="true" />
+
+                    <h:outputLabel for="lastName" value="Last Name:" />
+                    <p:inputText id="lastName" value="#{managerBean.newCustomer.lastName}" required="true" />
+
+                    <h:outputLabel for="username" value="Username:" />
+                    <p:inputText id="username" value="#{managerBean.newCustomer.username}" required="true" />
+
+                    <h:outputLabel for="password" value="Password:" />
+                    <p:inputText id="password" value="#{managerBean.newCustomer.password}" required="true" />
+
+                    <h:outputLabel for="email" value="Email:" />
+                    <p:inputText id="email" value="#{managerBean.newCustomer.email}" required="false" />
+
+                    <h:outputLabel for="phoneNumber" value="Phone Number:" />
+                    <p:inputText id="phoneNumber" value="#{managerBean.newCustomer.phoneNumber}" required="false" />
+                    
+                </p:panelGrid>
+                <ul class="info-list">
+                    <li>The email and phone number fields can be left empty if you want and the computer will generate them</li>
+                </ul>
+                
+                <p:commandButton value="Add Customer" action="#{managerBean.addCustomer}" update="customerTable" style="margin: 0 auto; display: block;" />
+
+            </h:form>
+        </div>
+
+        <div class="button-container">
+            <h:form>
+            <p:commandButton value="Back" action="#{linkBean.getLinkLogin}" style="margin: 0 auto; display: block;" />
+            </h:form>
+        </div>
+
+        <h2>Customer List</h2>
+        <p:dataTable id="customerTable" value="#{managerBean.customers}" var="customer">
+                <p:column headerText="ID">
+                    <h:outputText value="#{customer.id}" />
+                </p:column>
+                <p:column headerText="First Name">
+                    <h:outputText value="#{customer.firstName}" />
+                </p:column>
+                <p:column headerText="Last Name">
+                    <h:outputText value="#{customer.lastName}" />
+                </p:column>
+                <p:column headerText="Role">
+                    <h:outputText value="#{customer.userType}" />
+                </p:column>
+                <p:column headerText="Username">
+                    <h:outputText value="#{customer.username}" />
+                </p:column>
+                <p:column headerText="Password">
+                    <h:outputText value="#{customer.password}" />
+                </p:column>
+                <p:column headerText="Email">
+                    <h:outputText value="#{customer.email}" />
+                </p:column>
+                <p:column headerText="Phone Number">
+                    <h:outputText value="#{customer.phoneNumber}" />
+                </p:column>
+        </p:dataTable>
+    </div>
+</h:body>
+</html>
+

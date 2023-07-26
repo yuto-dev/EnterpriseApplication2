@@ -65,9 +65,30 @@ and open the template in the editor.
             cursor: pointer;
             transition: background-color 0.3s;
         }
+        
+        .register-button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin: 30px
+        }
 
         .login-button:hover {
             background-color: #0056b3;
+        }
+        
+        .form-container h2 {
+            margin-top: 30px;
+        }
+        
+        .button-container {
+            text-align: center;
         }
     </style>
 </h:head>
@@ -87,6 +108,13 @@ and open the template in the editor.
             </div>
 
             <p:commandButton value="Login" action="#{loginBean.login}" styleClass="login-button" />
+            <p:commandButton value="Register" action="#{linkBean.getLinkAddCustomer}" styleClass="register-button" />
+        </h:form>
+    </div>
+    
+    <div class="button-container">
+        <h:form>
+            <p:commandButton value="Register" action="#{linkBean.getLinkAddCustomer}" style="margin: 0 auto; display: block;" />
         </h:form>
     </div>
 </h:body>
