@@ -130,7 +130,7 @@ and open the template in the editor.
                     <h:outputText value="#{booking.customerId}" />
                 </p:column>
             <p:column headerText="Apply">
-                <p:commandButton value="Apply" action="#{kitchenStaffBean.progressBooking(booking)}" update="bookingTable" styleClass="apply-button" />
+                <p:commandButton value="Apply" action="#{kitchenStaffBean.progressBooking(booking)}" update="bookingTable" styleClass="apply-button" rendered="#{booking.status eq 'Approved'}" />
             </p:column>
         </p:dataTable>
         </h:form>

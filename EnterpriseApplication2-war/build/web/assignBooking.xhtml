@@ -120,7 +120,7 @@ and open the template in the editor.
         
         <div class="button-container">
 
-            <p:commandButton value="Back" action="#{linkBean.getLinkManagerMenu}" style="margin: 0 auto; display: block;" />
+            <p:commandButton value="Back" action="#{linkBean.getLinkManagerBookingMenu}" style="margin: 0 auto; display: block;" />
 
         </div>
         
@@ -142,7 +142,7 @@ and open the template in the editor.
                     <h:outputText value="#{booking.customerId}" />
                 </p:column>
             <p:column headerText="Apply">
-                <p:commandButton value="Apply" action="#{managerBean.assignBooking(booking)}" update="bookingTable" styleClass="apply-button" />
+                <p:commandButton value="Apply" action="#{managerBean.assignBooking(booking)}" update="bookingTable" styleClass="apply-button" rendered="#{booking.status eq 'Pending'}" />
             </p:column>
         </p:dataTable>
         <h2>Kitchen Staff List</h2>

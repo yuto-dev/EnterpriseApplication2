@@ -20,6 +20,7 @@ public class LinkBean {
     private String linkLogin;
     
     private String linkManagerMenu;
+    private String linkManagerBookingMenu;
     
     private String linkManagerCrud;
     private String linkAddManager;
@@ -37,6 +38,7 @@ public class LinkBean {
     private String linkUpdateCustomer;
     
     private String linkAssignBooking;
+    private String linkCollectPayment;
     
     // STAFF
     
@@ -61,6 +63,8 @@ public class LinkBean {
     private String linkDeleteReview;
     private String linkUpdateReview;
     
+    
+    
     @PostConstruct
     public void init() {
         
@@ -68,6 +72,8 @@ public class LinkBean {
         
         linkManagerCrud = "managerCrud";
         linkManagerMenu = "managerMenu";
+        linkManagerBookingMenu = "managerBookingMenu";
+        
         linkAddManager = "addManager";
         linkDeleteManager = "deleteManager";
         linkUpdateManager = "updateManager";
@@ -83,7 +89,7 @@ public class LinkBean {
         linkUpdateCustomer = "updateCustomer";
         
         linkAssignBooking = "assignBooking";
-        
+        linkCollectPayment = "collectPayment";
         linkDeleteBooking = "deleteBooking";
         
         // STAFF
@@ -231,6 +237,14 @@ public class LinkBean {
 
     public String getLinkUpdateKitchenStaffBooking() {
         return linkUpdateKitchenStaffBooking;
+    }
+
+    public String getLinkCollectPayment() {
+        return linkCollectPayment;
+    }
+
+    public String getLinkManagerBookingMenu() {
+        return linkManagerBookingMenu;
     }
     
     

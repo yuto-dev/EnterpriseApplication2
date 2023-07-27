@@ -6,7 +6,7 @@ import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 import model.User;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2023-07-27T21:18:20")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2023-07-27T21:43:12")
 @StaticMetamodel(Booking.class)
 public class Booking_ { 
 

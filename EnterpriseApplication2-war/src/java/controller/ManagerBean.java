@@ -461,6 +461,38 @@ public class ManagerBean implements Serializable {
             System.out.println("Selected Booking/Staff ID is null");
         }
     }
+    
+    public void collectPayment(Booking booking) {
+        setSelectedBooking(booking);
+        
+        selectedBookingId = booking.getId();
+        if (selectedBookingId != null) {
+            Booking BookingToUpdate = BookingFacade.find(selectedBookingId);
+
+                if (BookingToUpdate != null) {
+                    
+                    if (BookingToUpdate.getStatus().equals("Fulfilled")){
+                        // Update the User's properties using values from the UI
+                        BookingToUpdate.setStatus("Paid");
+                    
+                        // Save the changes to the database
+                        BookingFacade.updateBooking(BookingToUpdate);
+
+                        // Refresh the list of Users
+                        bookings = BookingFacade.getAllBookings();
+                    }
+                    else {
+                        System.out.println("Booking is not yet fulfilled");
+                    }
+   
+                } else {
+                    // Handle the case when the User with the selected ID is not found
+                    System.out.println("Booking with ID " + selectedBookingId + " not found!");
+                }
+        } else {
+            System.out.println("Selected Booking ID is null");
+        }
+    }
 
 // Getters and setters
 
