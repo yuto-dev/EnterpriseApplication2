@@ -84,7 +84,7 @@ public class LoginBean implements Serializable {
                 case "S":
                     return "kitchenStaffMenu";
                 case "C":
-                    return "updateManager";
+                    return "customerMenu";
                 default:
                     // Unknown user type, handle as needed
                     return "unknownUserType?faces-redirect=true";

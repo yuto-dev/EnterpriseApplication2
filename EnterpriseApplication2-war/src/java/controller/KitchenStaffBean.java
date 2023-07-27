@@ -6,8 +6,6 @@
 package controller;
 
 import facade.UserFacade;
-import java.util.List;
-import java.util.Random;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
@@ -31,7 +29,6 @@ public class KitchenStaffBean {
     
     private Long selfId;
     
-    private List<User> selfKitchenStaffList;
     User selfKitchenStaff;
     
     private String newFirstName;

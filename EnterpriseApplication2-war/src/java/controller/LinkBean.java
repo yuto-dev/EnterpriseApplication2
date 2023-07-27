@@ -39,7 +39,23 @@ public class LinkBean {
     // STAFF
     
     private String linkKitchenStaffMenu;
+    
     private String linkEditKitchenStaff;
+    
+    // CUSTOMER
+    
+    private String linkCustomerMenu;
+    
+    private String linkEditCustomer;;
+    private String linkAddCustomerBooking;
+    private String linkDeleteBooking;
+    private String linkDeleteCustomerBooking;
+    private String linkUpdateBooking;
+    private String linkUpdateCustomerBooking;
+    
+    private String linkAddReview;
+    private String linkDeleteReview;
+    private String linkUpdateReview;
     
     @PostConstruct
     public void init() {
@@ -62,11 +78,27 @@ public class LinkBean {
         linkDeleteCustomer = "deleteCustomer";
         linkUpdateCustomer = "updateCustomer";
         
+        linkDeleteBooking = "deleteBooking";
+        
         // STAFF
         
         linkKitchenStaffMenu = "kitchenStaffMenu";
+        
         linkEditKitchenStaff = "editKitchenStaff";
         
+        // CUSTOMER
+        
+        linkCustomerMenu = "customerMenu";
+        
+        linkEditCustomer = "editCustomer";
+        
+        linkAddCustomerBooking = "addCustomerBooking";
+        linkDeleteCustomerBooking = "deleteCustomerBooking";
+        linkUpdateCustomerBooking = "updateCustomerBooking";
+        
+        linkAddReview = "addReview";
+        linkDeleteReview = "deleteReview";
+        linkUpdateReview = "updateReview";
     }
 
     public String getLinkLogin() {
@@ -133,16 +165,52 @@ public class LinkBean {
         return linkKitchenStaffMenu;
     }
 
-    public void setLinkKitchenStaffMenu(String linkKitchenStaffMenu) {
-        this.linkKitchenStaffMenu = linkKitchenStaffMenu;
-    }
-
     public String getLinkEditKitchenStaff() {
         return linkEditKitchenStaff;
     }
+    
+    public String getLinkCustomerMenu() {
+        return linkCustomerMenu;
+    }
 
-    public void setLinkEditKitchenStaff(String linkEditKitchenStaff) {
-        this.linkEditKitchenStaff = linkEditKitchenStaff;
+    public String getLinkEditCustomer() {
+        return linkEditCustomer;
+    }
+
+    public String getLinkAddCustomerBooking() {
+        return linkAddCustomerBooking;
+    }
+
+    public String getLinkDeleteBooking() {
+        return linkDeleteBooking;
+    }
+
+    public String getLinkUpdateBooking() {
+        return linkUpdateBooking;
+    }
+
+    public String getLinkAddReview() {
+        return linkAddReview;
+    }
+
+    public String getLinkDeleteReview() {
+        return linkDeleteReview;
+    }
+
+    public String getLinkUpdateReview() {
+        return linkUpdateReview;
+    }
+
+    public String getLinkDeleteCustomerBooking() {
+        return linkDeleteCustomerBooking;
+    }
+
+    public void setLinkDeleteCustomerBooking(String linkDeleteCustomerBooking) {
+        this.linkDeleteCustomerBooking = linkDeleteCustomerBooking;
+    }
+
+    public String getLinkUpdateCustomerBooking() {
+        return linkUpdateCustomerBooking;
     }
     
     

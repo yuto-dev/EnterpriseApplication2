@@ -388,7 +388,7 @@ public class ManagerBean implements Serializable {
                     UserFacade.updateUser(UserToUpdate);
 
                     // Refresh the list of Users
-                    customers = UserFacade.getUsersByRole("S");
+                    customers = UserFacade.getUsersByRole("C");
                 } else {
                     // Handle the case when the User with the selected ID is not found
                     System.out.println("User with ID " + selectedCustomerId + " not found!");

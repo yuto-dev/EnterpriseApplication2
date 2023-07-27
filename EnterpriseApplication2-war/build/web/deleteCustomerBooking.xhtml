@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+    <title>Delete Booking</title>
+    <style>
+        /* Add your custom CSS styles here */
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+        }
+
+        .form-container h2 {
+            margin-top: 30px;
+        }
+
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .btn {
+            width: 200px;
+            height: 40px;
+            margin: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .info-list {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+    </style>
+</h:head>
+<h:body>
+    <div class="main-menu">
+        <div class="form-container">
+            <h1>Delete Booking</h1>
+            <h:form>
+                <p:panelGrid columns="2" columnClasses="label-column, input-column">
+                    
+                    <h:outputLabel for="bookingIdInput" value="Booking ID: " />
+                    <h:inputText id="bookingIdInput" value="#{customerBean.bookingIdInput}" required="true">
+                    <f:validateLongRange minimum="1" maximum="9999" />
+                    </h:inputText>
+
+                </p:panelGrid>
+                <div class="button-container">
+                <p:commandButton value="Delete Booking" action="#{customerBean.deleteBooking}" update="bookingTable" style="margin: 0 auto; display: block;" />
+                </div>
+            </h:form>
+        </div>
+
+        
+        <div class="button-container">
+            <h:form>
+            <p:commandButton value="Back" action="#{linkBean.getLinkCustomerMenu}" style="margin: 0 auto; display: block;" />
+            </h:form>
+        </div>
+            
+
+        <h2>Booking List</h2>
+        <p:dataTable id="bookingTable" value="#{customerBean.bookings}" var="booking">
+                <p:column headerText="ID">
+                    <h:outputText value="#{booking.id}" />
+                </p:column>
+                <p:column headerText="Date">
+                    <h:outputText value="#{booking.bookingDate}" />
+                </p:column>
+                <p:column headerText="Status">
+                    <h:outputText value="#{booking.status}" />
+                </p:column>
+                <p:column headerText="Assigned Staff ID">
+                    <h:outputText value="#{booking.assignedKitchenStaff}" />
+                </p:column>
+                <p:column headerText="Customer ID">
+                    <h:outputText value="#{booking.customerId}" />
+                </p:column>
+        </p:dataTable>
+    </div>
+</h:body>
+</html>

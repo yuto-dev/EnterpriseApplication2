@@ -6,60 +6,66 @@
 package model;
 
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.util.Date;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
  * @author Ryzen5
  */
 @Entity
+@Table(name = "bookings")
 public class Booking implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long bookingId;
-    private LocalDate date;
-    private LocalTime time;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
+    private Long id;
+    
+    
+    @Temporal(TemporalType.DATE)
+    private Date bookingDate;
     private String status;
+    
+    private Long assignedKitchenStaffId;
+    private Long customerId;
 
+    @JoinColumn(name = "ASSIGNEDKITCHENSTAFF_ID")
     @ManyToOne
-    private Manager assignedManager;
-
+    private User assignedKitchenStaff;
+    
+    @JoinColumn(name = "CUSTOMER_ID")
     @ManyToOne
-    private KitchenStaff assignedKitchenStaff;
-
-    @ManyToOne
-    private Customer customer;
+    private User customer;
+    
+    //private Long rating;
+    //private String feedback;
 
     public Long getId() {
-        return bookingId;
+        return id;
     }
 
-    public void setId(Long bookingId) {
-        this.bookingId = bookingId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public Date getBookingDate() {
+        return bookingDate;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-    public LocalTime getTime() {
-        return time;
-    }
-
-    public void setTime(LocalTime time) {
-        this.time = time;
+    public void setBookingDate(Date bookingDate) {
+        this.bookingDate = bookingDate;
     }
 
     public String getStatus() {
@@ -70,15 +76,7 @@ public class Booking implements Serializable {
         this.status = status;
     }
 
-    public Manager getAssignedManager() {
-        return assignedManager;
-    }
-
-    public void setAssignedManager(Manager assignedManager) {
-        this.assignedManager = assignedManager;
-    }
-
-    public KitchenStaff getAssignedKitchenStaff() {
+    public User getAssignedKitchenStaff() {
         return assignedKitchenStaff;
     }
 
@@ -86,19 +84,53 @@ public class Booking implements Serializable {
         this.assignedKitchenStaff = assignedKitchenStaff;
     }
 
-    public Customer getCustomer() {
+    public User getCustomer() {
         return customer;
     }
 
-    public void setCustomer(Customer customer) {
+    public void setCustomer(User customer) {
         this.customer = customer;
     }
+
+    public Long getAssignedKitchenStaffId() {
+        return assignedKitchenStaffId;
+    }
+
+   public void setAssignedKitchenStaffId(Long assignedKitchenStaffId) {
+        this.assignedKitchenStaffId = assignedKitchenStaffId;
+    }
+
+    public Long getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
+    }
+/*
+    public Long getRating() {
+        return rating;
+    }
+
+    public void setRating(Long rating) {
+        this.rating = rating;
+    }
+
+    public String getFeedback() {
+        return feedback;
+    }
+
+    public void setFeedback(String feedback) {
+        this.feedback = feedback;
+    }
+*/    
+    
     
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (bookingId != null ? bookingId.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
@@ -109,7 +141,7 @@ public class Booking implements Serializable {
             return false;
         }
         Booking other = (Booking) object;
-        if ((this.bookingId == null && other.bookingId != null) || (this.bookingId != null && !this.bookingId.equals(other.bookingId))) {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -117,7 +149,7 @@ public class Booking implements Serializable {
 
     @Override
     public String toString() {
-        return "model.booking[ bookingId=" + bookingId + " ]";
+        return "model.booking[ bookingId=" + id + " ]";
     }
     
 }

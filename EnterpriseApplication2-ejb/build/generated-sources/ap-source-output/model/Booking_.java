@@ -1,24 +1,21 @@
 package model;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.util.Date;
 import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
-import model.Customer;
-import model.KitchenStaff;
-import model.Manager;
+import model.User;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2023-07-26T21:50:10")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2023-07-27T20:29:32")
 @StaticMetamodel(Booking.class)
 public class Booking_ { 
 
-    public static volatile SingularAttribute<Booking, LocalDate> date;
-    public static volatile SingularAttribute<Booking, KitchenStaff> assignedKitchenStaff;
-    public static volatile SingularAttribute<Booking, Manager> assignedManager;
-    public static volatile SingularAttribute<Booking, LocalTime> time;
-    public static volatile SingularAttribute<Booking, Long> bookingId;
+    public static volatile SingularAttribute<Booking, Long> assignedKitchenStaffId;
+    public static volatile SingularAttribute<Booking, User> assignedKitchenStaff;
+    public static volatile SingularAttribute<Booking, Long> customerId;
+    public static volatile SingularAttribute<Booking, Date> bookingDate;
+    public static volatile SingularAttribute<Booking, Long> id;
     public static volatile SingularAttribute<Booking, String> status;
-    public static volatile SingularAttribute<Booking, Customer> customer;
+    public static volatile SingularAttribute<Booking, User> customer;
 
 }
