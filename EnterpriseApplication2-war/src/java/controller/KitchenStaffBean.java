@@ -5,12 +5,15 @@
  */
 package controller;
 
+import facade.BookingFacade;
 import facade.UserFacade;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import model.Booking;
 import model.User;
 
 /**
@@ -23,6 +26,9 @@ public class KitchenStaffBean {
     
     @EJB
     private UserFacade UserFacade;
+    
+    @EJB
+    private BookingFacade BookingFacade;
     
     @Inject
     private UserSessionBean UserSessionBean;
@@ -37,6 +43,11 @@ public class KitchenStaffBean {
     private String newPassword;
     private String newEmail;
     private String newPhoneNumber;
+    
+    private List<Booking> bookings;
+    
+    private Booking selectedBooking;
+    private Long selectedBookingId;
 
     @PostConstruct
     public void init() {
@@ -50,6 +61,11 @@ public class KitchenStaffBean {
         newPassword = null;
         newEmail = null;
         newPhoneNumber = null;
+        
+        bookings = BookingFacade.getBookingsByKitchenStaff(UserFacade.find(selfId));
+        
+        selectedBooking = new Booking();
+        selectedBookingId = null;
         
     }
     
@@ -127,6 +143,33 @@ public class KitchenStaffBean {
         }
     }
     
+    public void progressBooking(Booking booking) {
+        setSelectedBooking(booking);
+        
+        selectedBookingId = booking.getId();
+        if (selectedBookingId != null) {
+            Booking BookingToUpdate = BookingFacade.find(selectedBookingId);
+
+                if (BookingToUpdate != null) {
+                    // Update the User's properties using values from the UI
+                    BookingToUpdate.setStatus("Fulfilled");
+                    
+                    
+
+                    // Save the changes to the database
+                    BookingFacade.updateBooking(BookingToUpdate);
+
+                    // Refresh the list of Users
+                    bookings = BookingFacade.getBookingsByKitchenStaff(UserFacade.find(selfId));
+                } else {
+                    // Handle the case when the User with the selected ID is not found
+                    System.out.println("Booking with ID " + selectedBookingId + " not found!");
+                }
+        } else {
+            System.out.println("Selected Booking ID is null");
+        }
+    }
+    
     // Getter & Setter
 
     public Long getSelfId() {
@@ -191,6 +234,30 @@ public class KitchenStaffBean {
 
     public void setNewPhoneNumber(String newPhoneNumber) {
         this.newPhoneNumber = newPhoneNumber;
+    }
+
+    public Booking getSelectedBooking() {
+        return selectedBooking;
+    }
+
+    public void setSelectedBooking(Booking selectedBooking) {
+        this.selectedBooking = selectedBooking;
+    }
+
+    public Long getSelectedBookingId() {
+        return selectedBookingId;
+    }
+
+    public void setSelectedBookingId(Long selectedBookingId) {
+        this.selectedBookingId = selectedBookingId;
+    }
+
+    public List<Booking> getBookings() {
+        return bookings;
+    }
+
+    public void setBookings(List<Booking> bookings) {
+        this.bookings = bookings;
     }
     
     

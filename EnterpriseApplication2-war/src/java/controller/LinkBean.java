@@ -44,6 +44,8 @@ public class LinkBean {
     
     private String linkEditKitchenStaff;
     
+    private String linkUpdateKitchenStaffBooking;
+    
     // CUSTOMER
     
     private String linkCustomerMenu;
@@ -89,6 +91,8 @@ public class LinkBean {
         linkKitchenStaffMenu = "kitchenStaffMenu";
         
         linkEditKitchenStaff = "editKitchenStaff";
+        
+        linkUpdateKitchenStaffBooking = "updateKitchenStaffBooking";
         
         // CUSTOMER
         
@@ -223,6 +227,10 @@ public class LinkBean {
 
     public void setLinkAssignBooking(String linkAssignBooking) {
         this.linkAssignBooking = linkAssignBooking;
+    }
+
+    public String getLinkUpdateKitchenStaffBooking() {
+        return linkUpdateKitchenStaffBooking;
     }
     
     
