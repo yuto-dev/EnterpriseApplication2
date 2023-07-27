@@ -5,6 +5,7 @@
  */
 package controller;
 
+import facade.BookingFacade;
 import facade.UserFacade;
 import java.io.Serializable;
 import java.util.List;
@@ -14,6 +15,7 @@ import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import model.Booking;
 import model.User;
 
 /**
@@ -28,6 +30,9 @@ public class ManagerBean implements Serializable {
     @EJB
     private UserFacade UserFacade;
     
+    @EJB
+    private BookingFacade BookingFacade;
+    
     @Inject
     private UserSessionBean UserSessionBean;
     
@@ -40,6 +45,9 @@ public class ManagerBean implements Serializable {
     private User newCustomer;
     private List<User> customers;
     
+    private Booking newBooking;
+    private List<Booking> bookings;
+    
     private Long managerIdInput; //delete ID
     private User selectedManager; //current User
     
@@ -49,9 +57,12 @@ public class ManagerBean implements Serializable {
     private Long customerIdInput;
     private User selectedCustomer;
     
+    private Booking selectedBooking;
+    
     private Long selectedManagerId;
     private Long selectedKitchenStaffId;
     private Long selectedCustomerId;
+    private Long selectedBookingId;
     
     private String newFirstName;
     private String newLastName;
@@ -59,6 +70,8 @@ public class ManagerBean implements Serializable {
     private String newPassword;
     private String newEmail;
     private String newPhoneNumber;
+    
+    private Long assignedStaffId;
     
     // TEST VARIABLES, DELETE LATER
     private int navigation;
@@ -75,6 +88,9 @@ public class ManagerBean implements Serializable {
         newCustomer = new User();
         customers = UserFacade.getUsersByRole("C");
         
+        newBooking = new Booking();
+        bookings = BookingFacade.getAllBookings();
+        
         selectedManager = new User();
         selectedManagerId = null;
         
@@ -84,6 +100,9 @@ public class ManagerBean implements Serializable {
         selectedCustomer = new User();
         selectedCustomerId = null;
         
+        selectedBooking = new Booking();
+        selectedBookingId = null;
+        
         newFirstName = null;
         newLastName = null;
         newUsername = null;
@@ -92,6 +111,8 @@ public class ManagerBean implements Serializable {
         newPhoneNumber = null;
         
         navigation = 2;
+        
+        assignedStaffId = null;
         
         
     }
@@ -403,7 +424,45 @@ public class ManagerBean implements Serializable {
         customers = UserFacade.getUsersByRole("C"); // Update the list of Users after deletion
     }
     
-    // Getters and setters
+    //
+    // BOOKING
+    // MANAGEMENT
+    //
+    
+    public void assignBooking(Booking booking){
+        setSelectedBooking(booking);
+        selectedBookingId = getSelectedBookingId();
+        
+        assignedStaffId = getAssignedStaffId();
+        
+        if (selectedBookingId != null || assignedStaffId != null) {
+            Booking BookingToUpdate = BookingFacade.find(selectedBookingId);
+            User StaffToAssign = UserFacade.find(assignedStaffId);
+
+                if (BookingToUpdate != null || StaffToAssign != null) {
+                    // Update the User's properties using values from the UI
+                    
+                    BookingToUpdate.setId(getSelectedBookingId());
+                    BookingToUpdate.setStatus("Approved");
+                    BookingToUpdate.setAssignedKitchenStaff(StaffToAssign);
+                    BookingToUpdate.setAssignedKitchenStaffId(assignedStaffId);
+                    
+
+                    // Save the changes to the database
+                    BookingFacade.updateBooking(BookingToUpdate);
+
+                    // Refresh the list of Users
+                    bookings = BookingFacade.getAllBookings();
+                } else {
+                    // Handle the case when the User with the selected ID is not found
+                    System.out.println("Booking/Staff with ID " + selectedBookingId + " not found!");
+                }
+        } else {
+            System.out.println("Selected Booking/Staff ID is null");
+        }
+    }
+
+// Getters and setters
 
     public User getSelectedCustomer() {
         return selectedCustomer;
@@ -596,5 +655,46 @@ public class ManagerBean implements Serializable {
     public void setNavigation(int navigation) {
         this.navigation = navigation;
     }
+
+    public Booking getNewBooking() {
+        return newBooking;
+    }
+
+    public void setNewBooking(Booking newBooking) {
+        this.newBooking = newBooking;
+    }
+
+    public List<Booking> getBookings() {
+        return bookings;
+    }
+
+    public void setBookings(List<Booking> bookings) {
+        this.bookings = bookings;
+    }
+
+    public Booking getSelectedBooking() {
+        return selectedBooking;
+    }
+
+    public void setSelectedBooking(Booking selectedBooking) {
+        this.selectedBooking = selectedBooking;
+    }
+
+    public Long getSelectedBookingId() {
+        return selectedBookingId;
+    }
+
+    public void setSelectedBookingId(Long selectedBookingId) {
+        this.selectedBookingId = selectedBookingId;
+    }
+
+    public Long getAssignedStaffId() {
+        return assignedStaffId;
+    }
+
+    public void setAssignedStaffId(Long assignedStaffId) {
+        this.assignedStaffId = assignedStaffId;
+    }
+    
     
 }

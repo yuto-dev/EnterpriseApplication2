@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+    <title>Update Manager</title>
+    <style>
+        /* Add your custom CSS styles here */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f1f1f1;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            margin-top: 30px;
+            font-weight: bold;
+        }
+
+        ul {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+
+        .update-form {
+            margin-top: 30px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            text-align: center;
+
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-size: 14px;
+        }
+
+        .apply-button {
+            width: 100px;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .button-container {
+            text-align: center;
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+
+        .apply-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</h:head>
+
+<h:body>
+    <div class="container">
+        <h:form>
+        <h2>Update Booking</h2>
+        
+
+        <h2>Instructions:</h2>
+        <ul>
+            <li>Enter the ID of the manager to be modified</li>
+            <li>Enter the new first name and last name to be updated</li>
+            <li>Click the apply button in the corresponding manager row to update the details</li>
+            <li>Fields for data that do not need to be modified can be left empty</li>
+            <li>The apply button will not work if the entered ID and the ID of the corresponding manager do not match</li>
+        </ul>
+
+        <p:panel id="updateForm"  rendered="#{not empty managerBean.selectedBooking}" class="update-form">
+            <h:panelGrid columns="2">
+                <h:outputLabel for="idInput" value="Booking ID:" />
+                <p:inputText id="bookingIdInput" value="#{managerBean.selectedBookingId}" />
+            </h:panelGrid>
+
+            <h:panelGrid columns="2">
+                    <h:outputLabel for="idInput" value="Staff ID:" />
+                    <p:inputText id="staffIdInput" value="#{managerBean.assignedStaffId}" />
+            </h:panelGrid>
+        </p:panel>
+        
+        <div class="button-container">
+
+            <p:commandButton value="Back" action="#{linkBean.getLinkManagerMenu}" style="margin: 0 auto; display: block;" />
+
+        </div>
+        
+        <h2>Booking List</h2>
+        <p:dataTable id="bookingTable" value="#{managerBean.bookings}" var="booking">
+                <p:column headerText="ID">
+                    <h:outputText value="#{booking.id}" />
+                </p:column>
+                <p:column headerText="Date">
+                    <h:outputText value="#{booking.bookingDate}" />
+                </p:column>
+                <p:column headerText="Status">
+                    <h:outputText value="#{booking.status}" />
+                </p:column>
+                <p:column headerText="Assigned Staff ID">
+                    <h:outputText value="#{booking.assignedKitchenStaffId}" />
+                </p:column>
+                <p:column headerText="Customer ID">
+                    <h:outputText value="#{booking.customerId}" />
+                </p:column>
+            <p:column headerText="Apply">
+                <p:commandButton value="Apply" action="#{managerBean.assignBooking(booking)}" update="bookingTable" styleClass="apply-button" />
+            </p:column>
+        </p:dataTable>
+        <h2>Kitchen Staff List</h2>
+        <p:dataTable id="kitchenStaffTable" value="#{managerBean.kitchenStaffs}" var="kitchenStaff">
+                <p:column headerText="ID">
+                    <h:outputText value="#{kitchenStaff.id}" />
+                </p:column>
+                <p:column headerText="First Name">
+                    <h:outputText value="#{kitchenStaff.firstName}" />
+                </p:column>
+                <p:column headerText="Last Name">
+                    <h:outputText value="#{kitchenStaff.lastName}" />
+                </p:column>
+                <p:column headerText="Role">
+                    <h:outputText value="#{kitchenStaff.userType}" />
+                </p:column>
+                <p:column headerText="Username">
+                    <h:outputText value="#{kitchenStaff.username}" />
+                </p:column>
+                <p:column headerText="Password">
+                    <h:outputText value="#{kitchenStaff.password}" />
+                </p:column>
+                <p:column headerText="Email">
+                    <h:outputText value="#{kitchenStaff.email}" />
+                </p:column>
+                <p:column headerText="Phone Number">
+                    <h:outputText value="#{kitchenStaff.phoneNumber}" />
+                </p:column>
+        </p:dataTable>
+        </h:form>
+    </div>
+</h:body>
+</html>
+

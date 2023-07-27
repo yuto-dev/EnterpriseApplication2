@@ -80,7 +80,7 @@ public class Booking implements Serializable {
         return assignedKitchenStaff;
     }
 
-    public void setAssignedKitchenStaff(KitchenStaff assignedKitchenStaff) {
+    public void setAssignedKitchenStaff(User assignedKitchenStaff) {
         this.assignedKitchenStaff = assignedKitchenStaff;
     }
 

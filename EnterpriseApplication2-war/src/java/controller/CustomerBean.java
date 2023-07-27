@@ -14,7 +14,6 @@ import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import static jdk.nashorn.internal.runtime.JSType.toLong;
 import model.Booking;
 import model.User;
 
