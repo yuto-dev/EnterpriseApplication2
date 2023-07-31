@@ -7,6 +7,7 @@ package controller;
 
 import facade.BookingFacade;
 import facade.UserFacade;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -47,12 +48,15 @@ public class CustomerBean {
     private Booking newBooking;
     private List<Booking> bookings;
     private Date selectedDate;
+    private int numberOfSeats;
+    private List<Integer> seatOptions;
 
     private Long bookingIdInput;
     
     private Booking selectedBooking;
     private Long selectedBookingId;
     
+    private Booking checkBooking;
     
     
     @PostConstruct
@@ -71,6 +75,11 @@ public class CustomerBean {
                 System.out.println("waduh gaming");
         }
         
+        seatOptions = new ArrayList<>();
+        for (int i = 1; i <= 12; i++) {
+            seatOptions.add(i);
+        }
+        
         bookings = BookingFacade.getBookingsByCustomer(UserFacade.find(selfId));
                 System.out.println("init");
 
@@ -80,6 +89,7 @@ public class CustomerBean {
 
         selectedBooking = new Booking();
         selectedBookingId = null;
+        checkBooking = null;
         
     }
     
@@ -201,7 +211,15 @@ public class CustomerBean {
     }
     
     public void deleteBooking() {
-        BookingFacade.deleteBooking(bookingIdInput);
+        checkBooking = BookingFacade.find(bookingIdInput);
+        
+        if (checkBooking.getStatus().equals("Pending")){
+            BookingFacade.deleteBooking(bookingIdInput);
+        }
+        else {
+            System.out.println("Booking cannot be deleted as it has been approved");
+        }
+        
         bookings = BookingFacade.getBookingsByCustomer(UserFacade.find(selfId)); // Update the list of Users after deletion
     }
     
@@ -319,6 +337,30 @@ public class CustomerBean {
 
     public void setSelectedBookingId(Long selectedBookingId) {
         this.selectedBookingId = selectedBookingId;
+    }
+
+    public int getNumberOfSeats() {
+        return numberOfSeats;
+    }
+
+    public void setNumberOfSeats(int numberOfSeats) {
+        this.numberOfSeats = numberOfSeats;
+    }
+
+    public List<Integer> getSeatOptions() {
+        return seatOptions;
+    }
+
+    public void setSeatOptions(List<Integer> seatOptions) {
+        this.seatOptions = seatOptions;
+    }
+
+    public Booking getCheckBooking() {
+        return checkBooking;
+    }
+
+    public void setCheckBooking(Booking checkBooking) {
+        this.checkBooking = checkBooking;
     }
     
     

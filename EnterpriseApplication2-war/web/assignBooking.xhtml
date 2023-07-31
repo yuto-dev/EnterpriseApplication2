@@ -10,7 +10,7 @@ and open the template in the editor.
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://java.sun.com/jsf/core">
 <h:head>
-    <title>Update Manager</title>
+    <title>Assign Booking</title>
     <style>
         /* Add your custom CSS styles here */
         body {
@@ -94,16 +94,15 @@ and open the template in the editor.
 <h:body>
     <div class="container">
         <h:form>
-        <h2>Update Booking</h2>
+        <h2>Assign Booking</h2>
         
 
         <h2>Instructions:</h2>
         <ul>
-            <li>Enter the ID of the manager to be modified</li>
-            <li>Enter the new first name and last name to be updated</li>
+            <li>Enter the ID of the booking to be assigned a staff to</li>
+            <li>Enter the ID of the kitchen staff to be assigned to the booking</li>
             <li>Click the apply button in the corresponding manager row to update the details</li>
-            <li>Fields for data that do not need to be modified can be left empty</li>
-            <li>The apply button will not work if the entered ID and the ID of the corresponding manager do not match</li>
+            <li>The apply button will not work if the entered booking ID and the ID of the corresponding booking do not match</li>
         </ul>
 
         <p:panel id="updateForm"  rendered="#{not empty managerBean.selectedBooking}" class="update-form">
@@ -116,12 +115,16 @@ and open the template in the editor.
                     <h:outputLabel for="idInput" value="Staff ID:" />
                     <p:inputText id="staffIdInput" value="#{managerBean.assignedStaffId}" />
             </h:panelGrid>
+            <div class="button-container">
+            <p:commandButton value="Apply" action="#{managerBean.assignBooking}" update="bookingTable" styleClass="apply-button" />
+            </div>
         </p:panel>
+        </h:form>
         
         <div class="button-container">
-
+            <form>
             <p:commandButton value="Back" action="#{linkBean.getLinkManagerBookingMenu}" style="margin: 0 auto; display: block;" />
-
+            </form>
         </div>
         
         <h2>Booking List</h2>
@@ -141,9 +144,6 @@ and open the template in the editor.
                 <p:column headerText="Customer ID">
                     <h:outputText value="#{booking.customerId}" />
                 </p:column>
-            <p:column headerText="Apply">
-                <p:commandButton value="Apply" action="#{managerBean.assignBooking(booking)}" update="bookingTable" styleClass="apply-button" rendered="#{booking.status eq 'Pending'}" />
-            </p:column>
         </p:dataTable>
         <h2>Kitchen Staff List</h2>
         <p:dataTable id="kitchenStaffTable" value="#{managerBean.kitchenStaffs}" var="kitchenStaff">
@@ -172,7 +172,7 @@ and open the template in the editor.
                     <h:outputText value="#{kitchenStaff.phoneNumber}" />
                 </p:column>
         </p:dataTable>
-        </h:form>
+
     </div>
 </h:body>
 </html>

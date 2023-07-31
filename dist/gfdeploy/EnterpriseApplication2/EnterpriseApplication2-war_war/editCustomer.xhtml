@@ -10,7 +10,7 @@ and open the template in the editor.
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://java.sun.com/jsf/core">
 <h:head>
-    <title>Update Manager</title>
+    <title>Edit Profile</title>
     <style>
         /* Add your custom CSS styles here */
         body {
@@ -94,16 +94,14 @@ and open the template in the editor.
 <h:body>
     <div class="container">
         <h:form>
-        <h2>Update Kitchen Staff</h2>
+        <h2>Edit Profile</h2>
         
 
         <h2>Instructions:</h2>
         <ul>
-            <li>Enter the ID of the manager to be modified</li>
-            <li>Enter the new first name and last name to be updated</li>
-            <li>Click the apply button in the corresponding manager row to update the details</li>
+            <li>Enter the new data to be updated</li>
+            <li>Click the apply button</li>
             <li>Fields for data that do not need to be modified can be left empty</li>
-            <li>The apply button will not work if the entered ID and the ID of the corresponding manager do not match</li>
         </ul>
 
         <p:panel id="updateForm"  rendered="#{not empty customerBean.selfCustomer}" class="update-form">

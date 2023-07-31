@@ -10,7 +10,7 @@ and open the template in the editor.
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://java.sun.com/jsf/core">
 <h:head>
-    <title>Update Manager</title>
+    <title>Update Booking</title>
     <style>
         /* Add your custom CSS styles here */
         body {
@@ -99,11 +99,11 @@ and open the template in the editor.
 
         <h2>Instructions:</h2>
         <ul>
-            <li>Enter the ID of the manager to be modified</li>
-            <li>Enter the new first name and last name to be updated</li>
-            <li>Click the apply button in the corresponding manager row to update the details</li>
-            <li>Fields for data that do not need to be modified can be left empty</li>
-            <li>The apply button will not work if the entered ID and the ID of the corresponding manager do not match</li>
+            <li>Enter the ID of the booking to be modified</li>
+            <li>Enter the new date to be updated</li>
+            <li>Click the apply button in the corresponding booking row to update the details</li>
+            <li>The apply button will not work if the entered ID and the ID of the corresponding booking do not match</li>
+            <li>Only pending bookings can be modified. Once a booking is approved, it cannot be modified.</li>
         </ul>
 
         <p:panel id="updateForm"  rendered="#{not empty customerBean.selectedBooking}" class="update-form">
@@ -141,7 +141,7 @@ and open the template in the editor.
                     <h:outputText value="#{booking.customerId}" />
                 </p:column>
             <p:column headerText="Apply">
-                <p:commandButton value="Apply" action="#{customerBean.updateBooking(booking)}" update="bookingTable" styleClass="apply-button" />
+                <p:commandButton value="Apply" action="#{customerBean.updateBooking(booking)}" update="bookingTable" styleClass="apply-button" rendered="#{booking.status eq 'Pending'}" />
             </p:column>
         </p:dataTable>
         </h:form>

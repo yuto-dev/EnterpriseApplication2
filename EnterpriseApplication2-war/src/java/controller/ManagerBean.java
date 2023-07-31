@@ -72,6 +72,7 @@ public class ManagerBean implements Serializable {
     private String newPhoneNumber;
     
     private Long assignedStaffId;
+    private User checkStaff;
     
     // TEST VARIABLES, DELETE LATER
     private int navigation;
@@ -113,7 +114,7 @@ public class ManagerBean implements Serializable {
         navigation = 2;
         
         assignedStaffId = null;
-        
+        checkStaff = null;
         
     }
 
@@ -177,10 +178,6 @@ public class ManagerBean implements Serializable {
     
     public void addManager() {
         System.out.println("marco");
-        testId = UserSessionBean.getUserId();
-        
-        System.out.println(UserSessionBean.getUserId());
-        System.out.println("polo");
         newManager.setUserType("M");
         System.out.println("inside");
         if (newManager.getEmail() == null || newManager.getEmail().trim().isEmpty()) {
@@ -280,17 +277,24 @@ public class ManagerBean implements Serializable {
             String generatedPhoneNumber = generatePhoneNumber();
             newKitchenStaff.setPhoneNumber(formatPhoneNumber(generatedPhoneNumber));
         }
-    
-        UserFacade.addUser(newKitchenStaff);
+        
+        User checkUsername = UserFacade.getUserByUsername(newKitchenStaff.getUsername());
+        User checkEmail = UserFacade.getUserByEmail(newKitchenStaff.getEmail());
+        
+        if (checkUsername == null && checkEmail == null){
+            UserFacade.addUser(newKitchenStaff);
+        }
+        else {
+            System.out.println("Username or email has been taken.");
+        }
+        
         newKitchenStaff = new User(); // Clear the form after adding a User
         kitchenStaffs = UserFacade.getUsersByRole("S"); // Update the list of Users after adding a new one
     }
     
-    public void updateKitchenStaff(User kitchenStaff) {
+    public void updateKitchenStaff() {
         
-        setSelectedKitchenStaff(kitchenStaff);
-        
-        selectedKitchenStaffId = getSelectedKitchenStaffId();
+        setSelectedKitchenStaff(UserFacade.find(selectedKitchenStaffId));
 
         if (selectedKitchenStaffId != null) {
             User UserToUpdate = UserFacade.find(selectedKitchenStaffId);
@@ -341,7 +345,7 @@ public class ManagerBean implements Serializable {
     
     public void deleteKitchenStaff() {
         UserFacade.deleteUser(kitchenStaffIdInput);
-        kitchenStaffs = UserFacade.getUsersByRole("C"); // Update the list of Users after deletion
+        kitchenStaffs = UserFacade.getUsersByRole("S"); // Update the list of Users after deletion
     }
     
     //
@@ -360,17 +364,23 @@ public class ManagerBean implements Serializable {
             String generatedPhoneNumber = generatePhoneNumber();
             newCustomer.setPhoneNumber(formatPhoneNumber(generatedPhoneNumber));
         }
-    
-        UserFacade.addUser(newCustomer);
+        
+        User checkUsername = UserFacade.getUserByUsername(newCustomer.getUsername());
+        User checkEmail = UserFacade.getUserByEmail(newCustomer.getEmail());
+        
+        if (checkUsername == null && checkEmail == null){
+            UserFacade.addUser(newCustomer);
+        }
+        else {
+            System.out.println("Username or email has been taken.");
+        }
         newCustomer = new User(); // Clear the form after adding a User
         customers = UserFacade.getUsersByRole("C"); // Update the list of Users after adding a new one
     }
     
-    public void updateCustomer(User customer) {
+    public void updateCustomer() {
         
-        setSelectedCustomer(customer);
-        
-        selectedCustomerId = getSelectedCustomerId();
+        setSelectedCustomer(UserFacade.find(selectedCustomerId));
 
         if (selectedCustomerId != null) {
             User UserToUpdate = UserFacade.find(selectedCustomerId);
@@ -429,17 +439,16 @@ public class ManagerBean implements Serializable {
     // MANAGEMENT
     //
     
-    public void assignBooking(Booking booking){
-        setSelectedBooking(booking);
-        selectedBookingId = getSelectedBookingId();
+    public void assignBooking(){
         
-        assignedStaffId = getAssignedStaffId();
+        setSelectedBooking(BookingFacade.find(selectedBookingId));
+        checkStaff = UserFacade.find(assignedStaffId);
         
-        if (selectedBookingId != null || assignedStaffId != null) {
+        if (selectedBookingId != null && checkStaff != null && checkStaff.getUserType().equals("S")) {
             Booking BookingToUpdate = BookingFacade.find(selectedBookingId);
             User StaffToAssign = UserFacade.find(assignedStaffId);
 
-                if (BookingToUpdate != null || StaffToAssign != null) {
+                if (BookingToUpdate != null && StaffToAssign != null) {
                     // Update the User's properties using values from the UI
                     
                     BookingToUpdate.setId(getSelectedBookingId());

@@ -8,6 +8,7 @@ package facade;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import model.User;
@@ -46,6 +47,30 @@ public class UserFacade {
         return query.getResultList();
     }
 
+    public User getUserByUsername(String username) {
+        try {
+        Query query = em.createQuery("SELECT u FROM User u WHERE u.username = :username");
+        query.setParameter("username", username);
+        return (User) query.getSingleResult();
+        } catch (NoResultException ex) {
+        // If no user is found, return null or throw an exception as needed
+        return null;
+    }
+        
+    }
+    
+    public User getUserByEmail(String email) {
+        try {
+        Query query = em.createQuery("SELECT u FROM User u WHERE u.email = :email");
+        query.setParameter("email", email);
+        return (User) query.getSingleResult();
+        } catch (NoResultException ex) {
+        // If no user is found, return null or throw an exception as needed
+        return null;
+        }
+    }
+            
+            
     public List<User> getUsersByRole(String userType) {
         Query query = em.createQuery("SELECT u FROM User u WHERE u.userType = :userType");
         query.setParameter("userType", userType);

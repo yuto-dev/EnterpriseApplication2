@@ -7,7 +7,8 @@ and open the template in the editor.
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
 <h:head>
     <title>Add Booking</title>
     <style>
@@ -71,7 +72,15 @@ and open the template in the editor.
                 <h2>Booking Information</h2>
                 <p:panelGrid columns="2" columnClasses="label-column, input-column">
 
-                    <p:calendar value="#{customerBean.newBooking.bookingDate}" pattern="dd.MM.yyyy" />
+                    <h:outputLabel for="date" value="Booking Date:" />
+                    <p:calendar id="date" value="#{customerBean.newBooking.bookingDate}" pattern="dd.MM.yyyy" />
+                    
+                    <h:outputLabel for="seats" value="Number of Seats:" />
+                    <p:inputText id="seats" value="#{customerBean.newBooking.seats}" required="true" />
+
+                    <h:outputLabel for="food" value="Food:" />
+                    <p:inputText id="food" value="#{customerBean.newBooking.food}" required="true" />
+                        
                         
                 </p:panelGrid>
                 
@@ -97,8 +106,11 @@ and open the template in the editor.
                 <p:column headerText="Status">
                     <h:outputText value="#{booking.status}" />
                 </p:column>
-                <p:column headerText="Assigned Staff ID">
-                    <h:outputText value="#{booking.assignedKitchenStaff}" />
+                <p:column headerText="Number of Seats">
+                    <h:outputText value="#{booking.seats}" />
+                </p:column>
+            <p:column headerText="Food">
+                    <h:outputText value="#{booking.food}" />
                 </p:column>
                 <p:column headerText="Customer ID">
                     <h:outputText value="#{booking.customerId}" />

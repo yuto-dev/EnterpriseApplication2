@@ -10,7 +10,7 @@ and open the template in the editor.
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://java.sun.com/jsf/core">
 <h:head>
-    <title>Update Manager</title>
+    <title>Update Kitchen Staff</title>
     <style>
         /* Add your custom CSS styles here */
         body {
@@ -48,6 +48,15 @@ and open the template in the editor.
             background-color: #f9f9f9;
             text-align: center;
 
+        }
+        
+        .form-container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #f9f9f9;
         }
 
         .form-group {
@@ -92,6 +101,7 @@ and open the template in the editor.
 </h:head>
 
 <h:body>
+
     <div class="container">
         <h:form>
         <h2>Update Kitchen Staff</h2>
@@ -99,44 +109,52 @@ and open the template in the editor.
 
         <h2>Instructions:</h2>
         <ul>
-            <li>Enter the ID of the manager to be modified</li>
-            <li>Enter the new first name and last name to be updated</li>
-            <li>Click the apply button in the corresponding manager row to update the details</li>
-            <li>Fields for data that do not need to be modified can be left empty</li>
-            <li>The apply button will not work if the entered ID and the ID of the corresponding manager do not match</li>
+            <li>Enter the ID of the kitchen staff to be modified</li>
+            <li>Enter the new data to be updated</li>
+            <li>Click Apply</li>
         </ul>
 
-        <p:panel id="updateForm"  rendered="#{not empty managerBean.selectedKitchenStaff}" class="update-form">
-            <h:panelGrid columns="2">
-                <h:outputLabel for="idInput" value="ID:" />
-                <p:inputText id="idInput" value="#{managerBean.selectedKitchenStaffId}" />
-            </h:panelGrid>
+        <div class="form-container">
+            <p:panel id="updateForm"  rendered="#{not empty managerBean.selectedKitchenStaff}" class="update-form">
 
-            <h:panelGrid columns="2">
-                <h:outputLabel for="firstInput" value="First Name:" />
-                <p:inputText id="firstInput" value="#{managerBean.newFirstName}" />
+                <h:panelGrid columns="2">
+                    <h:outputLabel for="idInput" value="ID:" />
+                    <p:inputText id="idInput" value="#{managerBean.selectedKitchenStaffId}" />
+                
+                    <h:outputLabel for="firstInput" value="First Name:" />
+                    <p:inputText id="firstInput" value="#{managerBean.newFirstName}" />
 
-                <h:outputLabel for="lastInput" value="Last Name:" />
-                <p:inputText id="lastInput" value="#{managerBean.newLastName}" />
+                    <h:outputLabel for="lastInput" value="Last Name:" />
+                    <p:inputText id="lastInput" value="#{managerBean.newLastName}" />
                 
-                <h:outputLabel for="usernameInput" value="Username:" />
-                <p:inputText id="usernameInput" value="#{managerBean.newUsername}" />
+                    <h:outputLabel for="usernameInput" value="Username:" />
+                    <p:inputText id="usernameInput" value="#{managerBean.newUsername}" />
                 
-                <h:outputLabel for="passwordInput" value="Password:" />
-                <p:inputText id="passwordInput" value="#{managerBean.newPassword}" />
+                    <h:outputLabel for="passwordInput" value="Password:" />
+                    <p:inputText id="passwordInput" value="#{managerBean.newPassword}" />
                 
-                <h:outputLabel for="emailInput" value="Email:" />
-                <p:inputText id="emailInput" value="#{managerBean.newEmail}" />
+                    <h:outputLabel for="emailInput" value="Email:" />
+                    <p:inputText id="emailInput" value="#{managerBean.newEmail}" />
                 
-                <h:outputLabel for="phoneNumberInput" value="Phone Number:" />
-                <p:inputText id="phoneNumberInput" value="#{managerBean.newPhoneNumber}" />
-            </h:panelGrid>
-        </p:panel>
+                    <h:outputLabel for="phoneNumberInput" value="Phone Number:" />
+                    <p:inputText id="phoneNumberInput" value="#{managerBean.newPhoneNumber}" />
+                
+                </h:panelGrid>
+            
+                    <div class="button-container">
+                    <p:commandButton value="Apply" action="#{managerBean.updateKitchenStaff}" update="kitchenStaffTable" styleClass="apply-button" />
+                    </div>
+            
+            </p:panel>
+        </div>
+        </h:form>
+        
+        
         
         <div class="button-container">
-
-            <p:commandButton value="Back" action="#{linkBean.getLinkKitchenStaffCrud}" style="margin: 0 auto; display: block;" />
-
+            <h:form>
+            <p:commandButton value="Back" action="#{linkBean.getLinkKitchenStaffCrud}" styleClass="apply-button" />
+            </h:form>
         </div>
         
         <p:dataTable id="kitchenStaffTable" value="#{managerBean.kitchenStaffs}" var="kitchenStaff">
@@ -164,11 +182,7 @@ and open the template in the editor.
             <p:column headerText="Phone Number">
                 <h:outputText value="#{kitchenStaff.phoneNumber}" />
             </p:column>
-            <p:column headerText="Apply">
-                <p:commandButton value="Apply" action="#{managerBean.updateKitchenStaff(kitchenStaff)}" update="kitchenStaffTable" styleClass="apply-button" />
-            </p:column>
         </p:dataTable>
-        </h:form>
     </div>
 </h:body>
 </html>

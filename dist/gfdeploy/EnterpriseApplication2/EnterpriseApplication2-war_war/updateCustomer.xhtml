@@ -10,7 +10,7 @@ and open the template in the editor.
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://java.sun.com/jsf/core">
 <h:head>
-    <title>Update Manager</title>
+    <title>Update Customer</title>
     <style>
         /* Add your custom CSS styles here */
         body {
@@ -50,6 +50,15 @@ and open the template in the editor.
 
         }
 
+        .form-container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+        }
+        
         .form-group {
             margin-bottom: 20px;
         }
@@ -99,20 +108,18 @@ and open the template in the editor.
 
         <h2>Instructions:</h2>
         <ul>
-            <li>Enter the ID of the manager to be modified</li>
-            <li>Enter the new first name and last name to be updated</li>
-            <li>Click the apply button in the corresponding manager row to update the details</li>
-            <li>Fields for data that do not need to be modified can be left empty</li>
-            <li>The apply button will not work if the entered ID and the ID of the corresponding manager do not match</li>
+            <li>Enter the ID of the customer to be modified</li>
+            <li>Enter the new data to be updated</li>
+            <li>Click Apply</li>
         </ul>
 
+        <div class="form-container">
         <p:panel id="updateForm"  rendered="#{not empty managerBean.selectedCustomer}" class="update-form">
+
             <h:panelGrid columns="2">
                 <h:outputLabel for="idInput" value="ID:" />
                 <p:inputText id="idInput" value="#{managerBean.selectedCustomerId}" />
-            </h:panelGrid>
-
-            <h:panelGrid columns="2">
+                
                 <h:outputLabel for="firstInput" value="First Name:" />
                 <p:inputText id="firstInput" value="#{managerBean.newFirstName}" />
 
@@ -130,13 +137,21 @@ and open the template in the editor.
                 
                 <h:outputLabel for="phoneNumberInput" value="Phone Number:" />
                 <p:inputText id="phoneNumberInput" value="#{managerBean.newPhoneNumber}" />
+                
             </h:panelGrid>
-        </p:panel>
+                <div class="button-container">
+                <p:commandButton value="Apply" action="#{managerBean.updateCustomer}" update="customerTable" styleClass="apply-button" />
+                </div>
+            </p:panel>
+            </div>
+        </h:form>
+        
+        
         
         <div class="button-container">
-
-            <p:commandButton value="Back" action="#{linkBean.getLinkCustomerCrud}" style="margin: 0 auto; display: block;" />
-
+            <h:form>
+            <p:commandButton value="Back" action="#{linkBean.getLinkCustomerCrud}" styleClass="apply-button" />
+            </h:form>
         </div>
         
         <p:dataTable id="customerTable" value="#{managerBean.customers}" var="customer">
@@ -164,11 +179,8 @@ and open the template in the editor.
             <p:column headerText="Phone Number">
                 <h:outputText value="#{customer.phoneNumber}" />
             </p:column>
-            <p:column headerText="Apply">
-                <p:commandButton value="Apply" action="#{managerBean.updateCustomer(customer)}" update="customerTable" styleClass="apply-button" />
-            </p:column>
         </p:dataTable>
-        </h:form>
+        
     </div>
 </h:body>
 </html>

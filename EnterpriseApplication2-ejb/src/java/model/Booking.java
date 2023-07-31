@@ -36,7 +36,16 @@ public class Booking implements Serializable {
     
     @Temporal(TemporalType.DATE)
     private Date bookingDate;
+    
     private String status;
+    @Column(name = "FOOD")
+    private String food;
+    @Column(name = "SEATS")
+    private Long seats;
+    @Column(name = "RATING")
+    private Long rating;
+    @Column(name = "REVIEW")
+    private String review;
     
     private Long assignedKitchenStaffId;
     private Long customerId;
@@ -107,7 +116,23 @@ public class Booking implements Serializable {
     public void setCustomerId(Long customerId) {
         this.customerId = customerId;
     }
-/*
+
+    public String getFood() {
+        return food;
+    }
+
+    public void setFood(String food) {
+        this.food = food;
+    }
+
+    public Long getSeats() {
+        return seats;
+    }
+
+    public void setSeats(Long seats) {
+        this.seats = seats;
+    }
+    
     public Long getRating() {
         return rating;
     }
@@ -116,14 +141,15 @@ public class Booking implements Serializable {
         this.rating = rating;
     }
 
-    public String getFeedback() {
-        return feedback;
+    public String getReview() {
+        return review;
     }
 
-    public void setFeedback(String feedback) {
-        this.feedback = feedback;
+    public void setReview(String review) {
+        this.review = review;
     }
-*/    
+    
+    
     
     
 
