@@ -55,6 +55,12 @@ public class CustomerBean {
     
     private Booking selectedBooking;
     private Long selectedBookingId;
+    private Date newBookingDate;
+    private Long newBookingSeats;
+    private String newBookingFood;
+    
+    private Long newRating;
+    private String newReview;
     
     private Booking checkBooking;
     
@@ -91,6 +97,12 @@ public class CustomerBean {
         selectedBookingId = null;
         checkBooking = null;
         
+        newBookingDate = null;
+        newBookingSeats = null;
+        newBookingFood = null;
+        
+        newRating = null;
+        newReview = null;
     }
     
     public String formatPhoneNumber(String phoneNumber) {
@@ -190,20 +202,31 @@ public class CustomerBean {
         bookings = BookingFacade.getBookingsByCustomer(UserFacade.find(selfId)); // Update the list of Users after adding a new one
     }
     
-    public void updateBooking(Booking booking) {
-        setSelectedBooking(booking);
+    public void updateBooking() {
+        
+        setSelectedBooking(BookingFacade.find(selectedBookingId));
 
-        selectedBookingId = getSelectedBookingId();
-        if (selectedBookingId != null) {
+        if (selectedBookingId != null && selectedBooking.getCustomerId().equals(selfId) && selectedBooking.getStatus().equals("Pending")) {
             Booking BookingToUpdate = BookingFacade.find(selectedBookingId);
 
                 if (BookingToUpdate != null) {
                     // Update the User's properties using values from the UI
                     BookingToUpdate.setId(getSelectedBookingId());
                     
-                    BookingToUpdate.setBookingDate(selectedDate);
+                    if (newBookingDate == null || newBookingDate.toString().trim().isEmpty()) {
+                        newBookingDate = selectedBooking.getBookingDate();
+                    }
+                    if (newBookingSeats == null || newBookingSeats.toString().trim().isEmpty()) {
+                        newBookingSeats = selectedBooking.getSeats();
+                    }
+                    if (newBookingFood == null || newBookingFood.trim().isEmpty()) {
+                        newBookingFood = selectedBooking.getFood();
+                    }
                     
-
+                    BookingToUpdate.setBookingDate(newBookingDate);
+                    BookingToUpdate.setSeats(newBookingSeats);
+                    BookingToUpdate.setFood(newBookingFood);
+                    
                     // Save the changes to the database
                     BookingFacade.updateBooking(BookingToUpdate);
 
@@ -214,7 +237,7 @@ public class CustomerBean {
                     System.out.println("Booking with ID " + selectedBookingId + " not found!");
                 }
         } else {
-            System.out.println("Selected Booking ID is null");
+            System.out.println("Selected Booking ID is null, Booking belongs to a different customer, or booking has been approved.");
         }
     }
     
@@ -229,6 +252,34 @@ public class CustomerBean {
         }
         
         bookings = BookingFacade.getBookingsByCustomer(UserFacade.find(selfId)); // Update the list of Users after deletion
+    }
+    
+    public void addRating() {
+        
+        setSelectedBooking(BookingFacade.find(selectedBookingId));
+
+        if (selectedBookingId != null && selectedBooking.getCustomerId().equals(selfId) && selectedBooking.getStatus().equals("Paid")) {
+            Booking BookingToUpdate = BookingFacade.find(selectedBookingId);
+
+                if (BookingToUpdate != null) {
+                    // Update the User's properties using values from the UI
+                    BookingToUpdate.setId(getSelectedBookingId());
+                    
+                    BookingToUpdate.setRating(newRating);
+                    BookingToUpdate.setReview(newReview);
+                    BookingToUpdate.setStatus("Rated");
+                    // Save the changes to the database
+                    BookingFacade.updateBooking(BookingToUpdate);
+
+                    // Refresh the list of Users
+                    bookings = BookingFacade.getBookingsByCustomer(UserFacade.find(selfId));
+                } else {
+                    // Handle the case when the User with the selected ID is not found
+                    System.out.println("Booking with ID " + selectedBookingId + " not found!");
+                }
+        } else {
+            System.out.println("Selected Booking ID is null, Booking belongs to a different customer, or booking has been approved.");
+        }
     }
     
     // Getter & Setter
@@ -369,6 +420,46 @@ public class CustomerBean {
 
     public void setCheckBooking(Booking checkBooking) {
         this.checkBooking = checkBooking;
+    }
+
+    public Date getNewBookingDate() {
+        return newBookingDate;
+    }
+
+    public void setNewBookingDate(Date newBookingDate) {
+        this.newBookingDate = newBookingDate;
+    }
+
+    public Long getNewBookingSeats() {
+        return newBookingSeats;
+    }
+
+    public void setNewBookingSeats(Long newBookingSeats) {
+        this.newBookingSeats = newBookingSeats;
+    }
+
+    public String getNewBookingFood() {
+        return newBookingFood;
+    }
+
+    public void setNewBookingFood(String newBookingFood) {
+        this.newBookingFood = newBookingFood;
+    }
+
+    public Long getNewRating() {
+        return newRating;
+    }
+
+    public void setNewRating(Long newRating) {
+        this.newRating = newRating;
+    }
+
+    public String getNewReview() {
+        return newReview;
+    }
+
+    public void setNewReview(String newReview) {
+        this.newReview = newReview;
     }
     
     

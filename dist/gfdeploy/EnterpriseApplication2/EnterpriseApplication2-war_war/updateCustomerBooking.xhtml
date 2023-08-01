@@ -100,27 +100,48 @@ and open the template in the editor.
         <h2>Instructions:</h2>
         <ul>
             <li>Enter the ID of the booking to be modified</li>
-            <li>Enter the new date to be updated</li>
-            <li>Click the apply button in the corresponding booking row to update the details</li>
-            <li>The apply button will not work if the entered ID and the ID of the corresponding booking do not match</li>
-            <li>Only pending bookings can be modified. Once a booking is approved, it cannot be modified.</li>
+            <li>Enter the new data to be updated</li>
+            <li>Click the Apply</li>
         </ul>
 
+        <div class="form-container">
         <p:panel id="updateForm"  rendered="#{not empty customerBean.selectedBooking}" class="update-form">
             <h:panelGrid columns="2">
+                
                 <h:outputLabel for="idInput" value="ID:" />
                 <p:inputText id="idInput" value="#{customerBean.selectedBookingId}" />
+                
+                <h:outputLabel for="date" value="Booking Date:" />
+                <p:calendar id="date" value="#{customerBean.newBookingDate}" pattern="dd.MM.yyyy" />
+                
+                <h:outputLabel for="seats" value="Number of Seats:" />
+                <h:selectOneMenu id="seats" value="#{customerBean.newBookingSeats}">
+                    <f:selectItem itemValue="1" itemLabel="1"/>
+                    <f:selectItem itemValue="2" itemLabel="2"/>
+                    <f:selectItem itemValue="3" itemLabel="3"/>
+                    <f:selectItem itemValue="4" itemLabel="4"/>
+                </h:selectOneMenu>
+
+                <h:outputLabel for="food" value="Food:" />
+                <p:selectOneRadio id="food" value="#{customerBean.newBookingFood}">
+                    <f:selectItem itemValue="Chicken" itemLabel="Chicken"/>
+                    <f:selectItem itemValue="Beef" itemLabel="Beef"/>
+                    <f:selectItem itemValue="Vegetarian" itemLabel="Vegetarian"/>
+                </p:selectOneRadio>
+
             </h:panelGrid>
 
-            <h:panelGrid columns="2">
-                    <p:calendar value="#{customerBean.selectedDate}" pattern="dd.MM.yyyy" />
-            </h:panelGrid>
+            <div class="button-container">
+                <p:commandButton value="Apply" action="#{customerBean.updateBooking}" update="bookingTable" styleClass="apply-button" />
+            </div>
         </p:panel>
+        </div>
+        </h:form>
         
         <div class="button-container">
-
-            <p:commandButton value="Back" action="#{linkBean.getLinkCustomerMenu}" style="margin: 0 auto; display: block;" />
-
+            <h:form>
+            <p:commandButton value="Back" action="#{linkBean.getLinkCustomerBookingMenu}" style="margin: 0 auto; display: block;" />
+            </h:form>
         </div>
         
         <h2>Booking List</h2>
@@ -134,17 +155,20 @@ and open the template in the editor.
                 <p:column headerText="Status">
                     <h:outputText value="#{booking.status}" />
                 </p:column>
-                <p:column headerText="Assigned Staff ID">
-                    <h:outputText value="#{booking.assignedKitchenStaff}" />
+                <p:column headerText="Number of Seats">
+                    <h:outputText value="#{booking.seats}" />
+                </p:column>
+                <p:column headerText="Food">
+                    <h:outputText value="#{booking.food}" />
+                </p:column>
+                <p:column headerText="Price">
+                    <h:outputText value="#{booking.price}" />
                 </p:column>
                 <p:column headerText="Customer ID">
                     <h:outputText value="#{booking.customerId}" />
                 </p:column>
-            <p:column headerText="Apply">
-                <p:commandButton value="Apply" action="#{customerBean.updateBooking(booking)}" update="bookingTable" styleClass="apply-button" rendered="#{booking.status eq 'Pending'}" />
-            </p:column>
         </p:dataTable>
-        </h:form>
+        
     </div>
 </h:body>
 </html>

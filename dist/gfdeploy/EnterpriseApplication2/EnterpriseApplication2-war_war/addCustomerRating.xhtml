@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+    <title>Add or Update Ratings</title>
+    <style>
+        /* Add your custom CSS styles here */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f1f1f1;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            margin-top: 30px;
+            font-weight: bold;
+        }
+
+        ul {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+
+        .update-form {
+            margin-top: 30px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            text-align: center;
+
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-size: 14px;
+        }
+
+        .apply-button {
+            width: 100px;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .button-container {
+            text-align: center;
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+
+        .apply-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</h:head>
+
+<h:body>
+    <div class="container">
+        <h:form>
+        <h2>>Add or Update Ratings</h2>
+        
+
+        <h2>Instructions:</h2>
+        <ul>
+            <li>Enter the ID of the booking to be rated and reviewed</li>
+            <li>Enter the new rating and review</li>
+            <li>Click Apply</li>
+        </ul>
+
+        <div class="form-container">
+        <p:panel id="updateForm"  rendered="#{not empty customerBean.selectedBooking}" class="update-form">
+            <h:panelGrid columns="2">
+                
+                <h:outputLabel for="idInput" value="ID:" />
+                <p:inputText id="idInput" value="#{customerBean.selectedBookingId}" />
+                
+                <h:outputLabel for="rating" value="Rating:" />
+                <p:selectOneRadio id="rating" value="#{customerBean.newRating}">
+                    <f:selectItem itemValue="1" itemLabel="1"/>
+                    <f:selectItem itemValue="2" itemLabel="2"/>
+                    <f:selectItem itemValue="3" itemLabel="3"/>
+                    <f:selectItem itemValue="4" itemLabel="4"/>
+                    <f:selectItem itemValue="5" itemLabel="5"/>
+                </p:selectOneRadio>
+
+                <h:outputLabel for="review" value="Review:" />
+                <h:inputTextarea id="review" rows="5" cols="40" value="#{customerBean.newReview}" />
+
+            </h:panelGrid>
+
+            <div class="button-container">
+                <p:commandButton value="Apply" action="#{customerBean.addRating}" update="bookingTable" styleClass="apply-button" />
+            </div>
+        </p:panel>
+        </div>
+        </h:form>
+        
+        <div class="button-container">
+            <h:form>
+            <p:commandButton value="Back" action="#{linkBean.getLinkCustomerRatingMenu}" style="margin: 0 auto; display: block;" />
+            </h:form>
+        </div>
+        
+        <h2>Booking List</h2>
+        <p:dataTable id="bookingTable" value="#{customerBean.bookings}" var="booking">
+                <p:column headerText="ID">
+                    <h:outputText value="#{booking.id}" />
+                </p:column>
+                <p:column headerText="Date">
+                    <h:outputText value="#{booking.bookingDate}" />
+                </p:column>
+                <p:column headerText="Status">
+                    <h:outputText value="#{booking.status}" />
+                </p:column>
+                <p:column headerText="Number of Seats">
+                    <h:outputText value="#{booking.seats}" />
+                </p:column>
+                <p:column headerText="Food">
+                    <h:outputText value="#{booking.food}" />
+                </p:column>
+                <p:column headerText="Price">
+                    <h:outputText value="#{booking.price}" />
+                </p:column>
+                <p:column headerText="Customer ID">
+                    <h:outputText value="#{booking.customerId}" />
+                </p:column>
+                <p:column headerText="Rating">
+                    <h:outputText value="#{booking.rating}" />
+                </p:column>
+                <p:column headerText="Review">
+                    <h:outputText value="#{booking.review}" />
+                </p:column>
+        </p:dataTable>
+        
+    </div>
+</h:body>
+</html>
+

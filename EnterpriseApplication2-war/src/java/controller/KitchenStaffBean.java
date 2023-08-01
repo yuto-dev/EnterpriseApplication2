@@ -45,6 +45,7 @@ public class KitchenStaffBean {
     private String newPhoneNumber;
     
     private List<Booking> bookings;
+    private List<Booking> selfRatings;
     
     private Booking selectedBooking;
     private Long selectedBookingId;
@@ -63,6 +64,7 @@ public class KitchenStaffBean {
         newPhoneNumber = null;
         
         bookings = BookingFacade.getBookingsByKitchenStaff(UserFacade.find(selfId));
+        selfRatings = BookingFacade.getKitchenStaffRatedBookings(UserFacade.find(selfId));
         
         selectedBooking = new Booking();
         selectedBookingId = null;
@@ -258,6 +260,14 @@ public class KitchenStaffBean {
 
     public void setBookings(List<Booking> bookings) {
         this.bookings = bookings;
+    }
+
+    public List<Booking> getSelfRatings() {
+        return selfRatings;
+    }
+
+    public void setSelfRatings(List<Booking> selfRatings) {
+        this.selfRatings = selfRatings;
     }
     
     

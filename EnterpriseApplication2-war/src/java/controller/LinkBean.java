@@ -48,9 +48,13 @@ public class LinkBean {
     
     private String linkUpdateKitchenStaffBooking;
     
+    private String linkViewSelfRating;
+    
     // CUSTOMER
     
     private String linkCustomerMenu;
+    private String linkCustomerBookingMenu;
+    private String linkCustomerRatingMenu;
     
     private String linkEditCustomer;;
     private String linkAddCustomerBooking;
@@ -58,6 +62,10 @@ public class LinkBean {
     private String linkDeleteCustomerBooking;
     private String linkUpdateBooking;
     private String linkUpdateCustomerBooking;
+    
+    private String linkAddCustomerRating;
+    private String linkDeleteCustomerRating;
+    private String linkUpdateCustomerRating;
     
     private String linkAddReview;
     private String linkDeleteReview;
@@ -100,15 +108,23 @@ public class LinkBean {
         
         linkUpdateKitchenStaffBooking = "updateKitchenStaffBooking";
         
+        linkViewSelfRating = "viewSelfRating";
+        
         // CUSTOMER
         
         linkCustomerMenu = "customerMenu";
-        
+        linkCustomerBookingMenu = "customerBookingMenu";
+        linkCustomerRatingMenu = "customerRatingMenu";
+                
         linkEditCustomer = "editCustomer";
         
         linkAddCustomerBooking = "addCustomerBooking";
         linkDeleteCustomerBooking = "deleteCustomerBooking";
         linkUpdateCustomerBooking = "updateCustomerBooking";
+        
+        linkAddCustomerRating = "addCustomerRating";
+        linkDeleteCustomerRating = "deleteCustomerRating";
+        linkUpdateCustomerRating = "updateCustomerRating";
         
         linkAddReview = "addReview";
         linkDeleteReview = "deleteReview";
@@ -245,6 +261,54 @@ public class LinkBean {
 
     public String getLinkManagerBookingMenu() {
         return linkManagerBookingMenu;
+    }
+
+    public String getLinkCustomerBookingMenu() {
+        return linkCustomerBookingMenu;
+    }
+
+    public void setLinkCustomerBookingMenu(String linkCustomerBookingMenu) {
+        this.linkCustomerBookingMenu = linkCustomerBookingMenu;
+    }
+
+    public String getLinkCustomerRatingMenu() {
+        return linkCustomerRatingMenu;
+    }
+
+    public void setLinkCustomerRatingMenu(String linkCustomerRatingMenu) {
+        this.linkCustomerRatingMenu = linkCustomerRatingMenu;
+    }
+
+    public String getLinkAddCustomerRating() {
+        return linkAddCustomerRating;
+    }
+
+    public void setLinkAddCustomerRating(String linkAddCustomerRating) {
+        this.linkAddCustomerRating = linkAddCustomerRating;
+    }
+    
+    public String getLinkDeleteCustomerRating() {
+        return linkDeleteCustomerRating;
+    }
+
+    public void setLinkDeleteCustomerRating(String linkDeleteCustomerRating) {
+        this.linkDeleteCustomerRating = linkDeleteCustomerRating;
+    }
+
+    public String getLinkUpdateCustomerRating() {
+        return linkUpdateCustomerRating;
+    }
+
+    public void setLinkUpdateCustomerRating(String linkUpdateCustomerRating) {
+        this.linkUpdateCustomerRating = linkUpdateCustomerRating;
+    }
+
+    public String getLinkViewSelfRating() {
+        return linkViewSelfRating;
+    }
+
+    public void setLinkViewSelfRating(String linkViewSelfRating) {
+        this.linkViewSelfRating = linkViewSelfRating;
     }
     
     

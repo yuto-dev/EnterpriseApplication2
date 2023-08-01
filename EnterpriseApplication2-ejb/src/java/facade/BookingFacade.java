@@ -54,6 +54,13 @@ public class BookingFacade {
         return query.getResultList();
     }
     
+    public List<Booking> getKitchenStaffRatedBookings(User assignedKitchenStaff) {
+        TypedQuery<Booking> query = em.createQuery("SELECT b FROM Booking b WHERE b.assignedKitchenStaff = :assignedKitchenStaff AND b.rating IS NOT NULL", Booking.class);
+        query.setParameter("assignedKitchenStaff", assignedKitchenStaff);
+        return query.getResultList();
+    }
+
+    
     public List<Booking> getBookingsByCustomer(User customer) {
         TypedQuery<Booking> query = em.createQuery("SELECT b FROM Booking b WHERE b.customer = :customer", Booking.class);
         query.setParameter("customer", customer);

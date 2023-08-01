@@ -55,10 +55,8 @@ and open the template in the editor.
         <div class="menu-panel">
             <h:form>
             <p:commandButton value="Edit Profile" action="#{linkBean.getLinkEditCustomer}" styleClass="menu-button" />
-            <p:commandButton value="Add Bookings" action="#{linkBean.getLinkAddCustomerBooking}" styleClass="menu-button" />
-            <p:commandButton value="Delete Bookings" action="#{linkBean.getLinkDeleteCustomerBooking}" styleClass="menu-button" />
-            <p:commandButton value="Update Bookings" action="#{linkBean.getLinkUpdateCustomerBooking}" styleClass="menu-button" />
-            <p:commandButton value="View Ratings" action="#{linkBean.getLinkAddReview}" styleClass="menu-button" />
+            <p:commandButton value="Bookings" action="#{linkBean.getLinkCustomerBookingMenu}" styleClass="menu-button" />
+            <p:commandButton value="Ratings" action="#{linkBean.getLinkCustomerRatingMenu}" styleClass="menu-button" />
             <p:commandButton value="Logout" action="#{userSessionBean.logout}" styleClass="menu-button" />
             </h:form>
         </div>

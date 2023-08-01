@@ -296,7 +296,7 @@ public class ManagerBean implements Serializable {
         
         setSelectedKitchenStaff(UserFacade.find(selectedKitchenStaffId));
 
-        if (selectedKitchenStaffId != null) {
+        if (selectedKitchenStaffId != null && selectedKitchenStaff.getUserType().equals("S")) {
             User UserToUpdate = UserFacade.find(selectedKitchenStaffId);
 
                 if (UserToUpdate != null) {
