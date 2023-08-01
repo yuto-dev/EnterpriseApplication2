@@ -76,10 +76,19 @@ and open the template in the editor.
                     <p:calendar id="date" value="#{customerBean.newBooking.bookingDate}" pattern="dd.MM.yyyy" />
                     
                     <h:outputLabel for="seats" value="Number of Seats:" />
-                    <p:inputText id="seats" value="#{customerBean.newBooking.seats}" required="true" />
+                    <h:selectOneMenu id="seats" value="#{customerBean.newBooking.seats}">
+                    <f:selectItem itemValue="1" itemLabel="1"/>
+                    <f:selectItem itemValue="2" itemLabel="2"/>
+                    <f:selectItem itemValue="3" itemLabel="3"/>
+                    <f:selectItem itemValue="4" itemLabel="4"/>
+                    </h:selectOneMenu>
 
                     <h:outputLabel for="food" value="Food:" />
-                    <p:inputText id="food" value="#{customerBean.newBooking.food}" required="true" />
+                    <p:selectOneRadio id="food" value="#{customerBean.newBooking.food}">
+                    <f:selectItem itemValue="Chicken" itemLabel="Chicken"/>
+                    <f:selectItem itemValue="Beef" itemLabel="Beef"/>
+                    <f:selectItem itemValue="Vegetarian" itemLabel="Vegetarian"/>
+                    </p:selectOneRadio>
                         
                         
                 </p:panelGrid>
@@ -109,8 +118,11 @@ and open the template in the editor.
                 <p:column headerText="Number of Seats">
                     <h:outputText value="#{booking.seats}" />
                 </p:column>
-            <p:column headerText="Food">
+                <p:column headerText="Food">
                     <h:outputText value="#{booking.food}" />
+                </p:column>
+                <p:column headerText="Price">
+                    <h:outputText value="#{booking.price}" />
                 </p:column>
                 <p:column headerText="Customer ID">
                     <h:outputText value="#{booking.customerId}" />

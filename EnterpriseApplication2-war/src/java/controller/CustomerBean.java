@@ -169,14 +169,22 @@ public class CustomerBean {
     
     public void addBooking() {
         
-        System.out.println("1");
+        if (newBooking.getFood().equals("Chicken")){
+            newBooking.setPrice(8 * newBooking.getSeats());
+        }
+        else if (newBooking.getFood().equals("Beef")){
+            newBooking.setPrice(10 * newBooking.getSeats());
+        }
+        else if (newBooking.getFood().equals("Vegetarian")){
+            newBooking.setPrice(6 * newBooking.getSeats());
+        }
+        else{
+            System.out.println("Pricing error");
+        }
         newBooking.setStatus("Pending");
-        System.out.println("1");
         newBooking.setCustomer(UserFacade.find(selfId));
-        System.out.println("1");
         newBooking.setCustomerId(selfId);
         BookingFacade.addBooking(newBooking);
-        System.out.println("1");
         
         newBooking = new Booking(); // Clear the form after adding a Booking
         bookings = BookingFacade.getBookingsByCustomer(UserFacade.find(selfId)); // Update the list of Users after adding a new one

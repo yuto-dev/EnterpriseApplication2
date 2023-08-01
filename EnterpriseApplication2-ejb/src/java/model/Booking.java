@@ -47,6 +47,8 @@ public class Booking implements Serializable {
     @Column(name = "REVIEW")
     private String review;
     
+    private Long price;
+    
     private Long assignedKitchenStaffId;
     private Long customerId;
 
@@ -147,6 +149,14 @@ public class Booking implements Serializable {
 
     public void setReview(String review) {
         this.review = review;
+    }
+
+    public Long getPrice() {
+        return price;
+    }
+
+    public void setPrice(Long price) {
+        this.price = price;
     }
     
     

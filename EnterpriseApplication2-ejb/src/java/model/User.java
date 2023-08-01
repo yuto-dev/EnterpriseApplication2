@@ -50,6 +50,9 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private List<Booking> bookings;
 
+    private Long rating;
+    
+    private Long completedBooking;
 
     // Constructors, getters, and setters (omitted for brevity)
     
@@ -117,6 +120,24 @@ public class User implements Serializable {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
+
+    public Long getRating() {
+        return rating;
+    }
+
+    public void setRating(Long rating) {
+        this.rating = rating;
+    }
+
+    public Long getCompletedBooking() {
+        return completedBooking;
+    }
+
+    public void setCompletedBooking(Long completedBooking) {
+        this.completedBooking = completedBooking;
+    }
+    
+    
     
         @Override
     public int hashCode() {
