@@ -40,6 +40,12 @@ public class LinkBean {
     private String linkAssignBooking;
     private String linkCollectPayment;
     
+    private String linkManagerReportMenu;
+    private String linkReportViewRating;
+    private String linkReportViewStock;
+    private String linkReportViewFinance;
+    private String linkReportBuyStock;
+    
     // STAFF
     
     private String linkKitchenStaffMenu;
@@ -99,6 +105,12 @@ public class LinkBean {
         linkAssignBooking = "assignBooking";
         linkCollectPayment = "collectPayment";
         linkDeleteBooking = "deleteBooking";
+        
+        linkManagerReportMenu = "managerReportMenu";
+        linkReportViewRating = "reportViewRating";
+        linkReportViewStock = "reportViewStock";
+        linkReportViewFinance = "reportViewFinance";
+        linkReportBuyStock = "reportBuyStock";
         
         // STAFF
         
@@ -235,9 +247,6 @@ public class LinkBean {
         return linkDeleteCustomerBooking;
     }
 
-    public void setLinkDeleteCustomerBooking(String linkDeleteCustomerBooking) {
-        this.linkDeleteCustomerBooking = linkDeleteCustomerBooking;
-    }
 
     public String getLinkUpdateCustomerBooking() {
         return linkUpdateCustomerBooking;
@@ -245,10 +254,6 @@ public class LinkBean {
 
     public String getLinkAssignBooking() {
         return linkAssignBooking;
-    }
-
-    public void setLinkAssignBooking(String linkAssignBooking) {
-        this.linkAssignBooking = linkAssignBooking;
     }
 
     public String getLinkUpdateKitchenStaffBooking() {
@@ -267,50 +272,45 @@ public class LinkBean {
         return linkCustomerBookingMenu;
     }
 
-    public void setLinkCustomerBookingMenu(String linkCustomerBookingMenu) {
-        this.linkCustomerBookingMenu = linkCustomerBookingMenu;
-    }
-
     public String getLinkCustomerRatingMenu() {
         return linkCustomerRatingMenu;
     }
 
-    public void setLinkCustomerRatingMenu(String linkCustomerRatingMenu) {
-        this.linkCustomerRatingMenu = linkCustomerRatingMenu;
-    }
-
     public String getLinkAddCustomerRating() {
         return linkAddCustomerRating;
-    }
-
-    public void setLinkAddCustomerRating(String linkAddCustomerRating) {
-        this.linkAddCustomerRating = linkAddCustomerRating;
     }
     
     public String getLinkDeleteCustomerRating() {
         return linkDeleteCustomerRating;
     }
 
-    public void setLinkDeleteCustomerRating(String linkDeleteCustomerRating) {
-        this.linkDeleteCustomerRating = linkDeleteCustomerRating;
-    }
-
     public String getLinkUpdateCustomerRating() {
         return linkUpdateCustomerRating;
-    }
-
-    public void setLinkUpdateCustomerRating(String linkUpdateCustomerRating) {
-        this.linkUpdateCustomerRating = linkUpdateCustomerRating;
     }
 
     public String getLinkViewSelfRating() {
         return linkViewSelfRating;
     }
 
-    public void setLinkViewSelfRating(String linkViewSelfRating) {
-        this.linkViewSelfRating = linkViewSelfRating;
+    public String getLinkManagerReportMenu() {
+        return linkManagerReportMenu;
     }
-    
+
+    public String getLinkReportViewRating() {
+        return linkReportViewRating;
+    }
+
+    public String getLinkReportViewStock() {
+        return linkReportViewStock;
+    }
+
+    public String getLinkReportViewFinance() {
+        return linkReportViewFinance;
+    }
+
+    public String getLinkReportBuyStock() {
+        return linkReportBuyStock;
+    }
     
     
 }

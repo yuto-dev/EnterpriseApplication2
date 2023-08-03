@@ -50,7 +50,7 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private List<Booking> bookings;
 
-    private Long rating;
+    private double rating;
     
     private Long completedBooking;
 
@@ -121,11 +121,11 @@ public class User implements Serializable {
         this.phoneNumber = phoneNumber;
     }
 
-    public Long getRating() {
+    public double getRating() {
         return rating;
     }
 
-    public void setRating(Long rating) {
+    public void setRating(double rating) {
         this.rating = rating;
     }
 

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+    <title>Buy Stock</title>
+    <style>
+        /* Add your custom CSS styles here */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f1f1f1;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            margin-top: 30px;
+            font-weight: bold;
+        }
+
+        ul {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+
+        .update-form {
+            margin-top: 30px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            text-align: center;
+
+        }
+
+        .form-container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-size: 14px;
+        }
+
+        .apply-button {
+            width: 100px;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .button-container {
+            text-align: center;
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+
+        .apply-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</h:head>
+
+<h:body>
+    <div class="container">
+        <h:form>
+        <h2>Buy Stock</h2>
+        
+
+        <h2>Instructions:</h2>
+        <ul>
+            <li>Enter the number of items to purchase</li>
+            <li>Click Apply</li>
+        </ul>
+
+        <div class="form-container">
+        <p:panel id="updateForm"  rendered="#{not empty managerBean.selectedCustomer}" class="update-form">
+            
+            <div class="button-container">
+            <h:outputLabel for="balance" value="Balance: " />
+            <h:outputText id="balance" value="#{managerBean.currentBalance}" style="margin-bottom:30px" />
+            </div>
+            
+            <h:panelGrid columns="2">
+                <h:outputLabel for="chickenInput" value="Chicken:" />
+                <p:inputText id="chickenInput" value="#{managerBean.restockChicken}" />
+                
+                <h:outputLabel for="beefInput" value="Beef:" />
+                <p:inputText id="beefInput" value="#{managerBean.restockBeef}" />
+
+                <h:outputLabel for="vegetarianInput" value="Vegetarian:" />
+                <p:inputText id="vegetarianInput" value="#{managerBean.restockVegetarian}" />
+                
+            </h:panelGrid>
+                <div class="button-container">
+                <p:commandButton value="Restock" action="#{managerBean.restock}" update="stockTable balance" styleClass="apply-button" />
+                </div>
+            </p:panel>
+            </div>
+        </h:form>
+        
+        
+        
+        <div class="button-container">
+            <h:form>
+            <p:commandButton value="Back" action="#{linkBean.getLinkManagerReportMenu}" styleClass="apply-button" />
+            </h:form>
+        </div>
+        
+        <h2>Total Stock</h2>
+        <p:dataTable id="stockTable" value="#{managerBean.stocks}" var="stock">
+                <p:column headerText="ID">
+                    <h:outputText value="#{stock.id}" />
+                </p:column>
+                <p:column headerText="Chicken">
+                    <h:outputText value="#{stock.chicken}" />
+                </p:column>
+                <p:column headerText="Beef">
+                    <h:outputText value="#{stock.beef}" />
+                </p:column>
+                <p:column headerText="Vegetarian">
+                    <h:outputText value="#{stock.vegetarian}" />
+                </p:column>
+        </p:dataTable>
+    </div>
+</h:body>
+</html>
+

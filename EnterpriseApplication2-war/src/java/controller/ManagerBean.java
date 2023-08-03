@@ -6,8 +6,11 @@
 package controller;
 
 import facade.BookingFacade;
+import facade.FinanceFacade;
+import facade.StockFacade;
 import facade.UserFacade;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Random;
 import javax.annotation.PostConstruct;
@@ -15,7 +18,10 @@ import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import static jdk.nashorn.internal.runtime.JSType.toLong;
 import model.Booking;
+import model.Finance;
+import model.Stock;
 import model.User;
 
 /**
@@ -33,8 +39,17 @@ public class ManagerBean implements Serializable {
     @EJB
     private BookingFacade BookingFacade;
     
+    @EJB
+    private StockFacade StockFacade;
+    
+    @EJB
+    private FinanceFacade FinanceFacade;
+    
     @Inject
     private UserSessionBean UserSessionBean;
+    
+    private Finance initFinance;
+    private Stock initStock;
     
     private User newManager;
     private List<User> managers;
@@ -73,6 +88,15 @@ public class ManagerBean implements Serializable {
     
     private Long assignedStaffId;
     private User checkStaff;
+    
+    private List<Booking> ratedBookings;
+    private Stock stocks;
+    private List<Finance> finances;
+    
+    private BigDecimal currentBalance;
+    private Long restockChicken;
+    private Long restockBeef;
+    private Long restockVegetarian;
     
     // TEST VARIABLES, DELETE LATER
     private int navigation;
@@ -116,6 +140,21 @@ public class ManagerBean implements Serializable {
         assignedStaffId = null;
         checkStaff = null;
         
+        ratedBookings = BookingFacade.getRatedBookings();
+        stocks = StockFacade.getStock();
+        finances = FinanceFacade.getAllFinance();
+        
+        if (FinanceFacade.getMostRecentFinance() != null){
+            currentBalance = FinanceFacade.getMostRecentFinance().getBalance();
+        }
+        
+        restockChicken = null;
+        restockBeef = null;
+        restockVegetarian = null;
+        
+        initStock = new Stock();
+        initFinance = new Finance();
+        
     }
 
     // TODO CHANGE GETALLUSERS BACK TO GETROLE
@@ -131,6 +170,21 @@ public class ManagerBean implements Serializable {
         }
     }
  */
+    
+    public void initCafeteria(){
+        
+        Long initStockValue = toLong(50);
+        
+        initFinance.setId(toLong(1));
+        initFinance.setTransactionType("IN");
+        initFinance.setItem("Init");
+        initFinance.setAmount(toLong(200));
+        initFinance.setBalance(BigDecimal.valueOf(200));
+        
+        StockFacade.createStock(initStockValue, initStockValue, initStockValue);
+        FinanceFacade.addFinance(initFinance);
+        
+    }
     
     // Phone Number Generator and Format
     public static String generatePhoneNumber() {
@@ -170,7 +224,7 @@ public class ManagerBean implements Serializable {
         return formattedNumber.toString();
     }
 
-
+    
     // 
     // MANAGER
     // CRUD
@@ -269,6 +323,8 @@ public class ManagerBean implements Serializable {
     public void addKitchenStaff() {
         
         newKitchenStaff.setUserType("S");
+        newKitchenStaff.setCompletedBooking(toLong(0));
+        newKitchenStaff.setRating(0);
         if (newKitchenStaff.getEmail() == null || newKitchenStaff.getEmail().trim().isEmpty()) {
             newKitchenStaff.setEmail(newKitchenStaff.getUsername()+"@mail.com");
         }
@@ -382,7 +438,7 @@ public class ManagerBean implements Serializable {
         
         setSelectedCustomer(UserFacade.find(selectedCustomerId));
 
-        if (selectedCustomerId != null) {
+        if (selectedCustomerId != null && selectedCustomer.getUserType().equals("C")) {
             User UserToUpdate = UserFacade.find(selectedCustomerId);
 
                 if (UserToUpdate != null) {
@@ -444,7 +500,7 @@ public class ManagerBean implements Serializable {
         setSelectedBooking(BookingFacade.find(selectedBookingId));
         checkStaff = UserFacade.find(assignedStaffId);
         
-        if (selectedBookingId != null && checkStaff != null && checkStaff.getUserType().equals("S")) {
+        if (selectedBookingId != null && selectedBooking.getStatus().equals("Pending") && checkStaff != null && checkStaff.getUserType().equals("S")) {
             Booking BookingToUpdate = BookingFacade.find(selectedBookingId);
             User StaffToAssign = UserFacade.find(assignedStaffId);
 
@@ -467,12 +523,15 @@ public class ManagerBean implements Serializable {
                     System.out.println("Booking/Staff with ID " + selectedBookingId + " not found!");
                 }
         } else {
-            System.out.println("Selected Booking/Staff ID is null");
+            System.out.println("Selected Booking/Staff ID is null, booking has been assigned, or the assigned user is not a staff.");
         }
     }
     
     public void collectPayment(Booking booking) {
         setSelectedBooking(booking);
+        Finance newFinance = new Finance();
+        Finance prevFinance = FinanceFacade.getMostRecentFinance();
+        
         
         selectedBookingId = booking.getId();
         if (selectedBookingId != null) {
@@ -481,11 +540,17 @@ public class ManagerBean implements Serializable {
                 if (BookingToUpdate != null) {
                     
                     if (BookingToUpdate.getStatus().equals("Fulfilled")){
-                        // Update the User's properties using values from the UI
+                        
+                        newFinance.setTransactionType("IN");
+                        newFinance.setItem(BookingToUpdate.getFood());
+                        newFinance.setAmount(BookingToUpdate.getPrice());
+                        newFinance.setBalance(prevFinance.getBalance().add(BigDecimal.valueOf(newFinance.getAmount())));
+                        
                         BookingToUpdate.setStatus("Paid");
                     
                         // Save the changes to the database
                         BookingFacade.updateBooking(BookingToUpdate);
+                        FinanceFacade.addFinance(newFinance);
 
                         // Refresh the list of Users
                         bookings = BookingFacade.getAllBookings();
@@ -501,6 +566,53 @@ public class ManagerBean implements Serializable {
         } else {
             System.out.println("Selected Booking ID is null");
         }
+    }
+    
+    public void restock(){
+        
+        stocks = StockFacade.getStock();
+        
+        
+        Long restockPrice = null;
+        
+        if (restockChicken != null){
+            Finance newFinance = new Finance();
+            Finance prevFinance = FinanceFacade.getMostRecentFinance();
+            
+            stocks.setChicken(stocks.getChicken() + restockChicken);
+            newFinance.setTransactionType("OUT");
+            newFinance.setItem("Chicken");
+            newFinance.setAmount(6 * restockChicken);
+            newFinance.setBalance(prevFinance.getBalance().subtract(BigDecimal.valueOf(newFinance.getAmount())));
+            FinanceFacade.addFinance(newFinance);
+        }
+        if (restockBeef != null){
+            Finance newFinance = new Finance();
+            Finance prevFinance = FinanceFacade.getMostRecentFinance();
+            
+            stocks.setBeef(stocks.getBeef() + restockBeef);
+            newFinance.setTransactionType("OUT");
+            newFinance.setItem("Beef");
+            newFinance.setAmount(8 * restockBeef);
+            newFinance.setBalance(prevFinance.getBalance().subtract(BigDecimal.valueOf(newFinance.getAmount())));
+            
+            FinanceFacade.addFinance(newFinance);
+        }
+        if (restockVegetarian != null){
+            Finance newFinance = new Finance();
+            Finance prevFinance = FinanceFacade.getMostRecentFinance();
+            
+            stocks.setVegetarian(stocks.getVegetarian() + restockVegetarian);
+            newFinance.setTransactionType("OUT");
+            newFinance.setItem("Vegetarian");
+            newFinance.setAmount(4 * restockVegetarian);
+            newFinance.setBalance(prevFinance.getBalance().subtract(BigDecimal.valueOf(newFinance.getAmount())));
+            
+            FinanceFacade.addFinance(newFinance);
+        }
+        
+        
+        StockFacade.updateStock(stocks);
     }
 
 // Getters and setters
@@ -735,6 +847,86 @@ public class ManagerBean implements Serializable {
 
     public void setAssignedStaffId(Long assignedStaffId) {
         this.assignedStaffId = assignedStaffId;
+    }
+
+    public List<Booking> getRatedBookings() {
+        return ratedBookings;
+    }
+
+    public void setRatedBookings(List<Booking> ratedBookings) {
+        this.ratedBookings = ratedBookings;
+    }
+
+    public User getCheckStaff() {
+        return checkStaff;
+    }
+
+    public void setCheckStaff(User checkStaff) {
+        this.checkStaff = checkStaff;
+    }
+
+    public Finance getInitFinance() {
+        return initFinance;
+    }
+
+    public void setInitFinance(Finance initFinance) {
+        this.initFinance = initFinance;
+    }
+
+    public Stock getInitStock() {
+        return initStock;
+    }
+
+    public void setInitStock(Stock initStock) {
+        this.initStock = initStock;
+    }
+
+    public Stock getStocks() {
+        return stocks;
+    }
+
+    public void setStocks(Stock stocks) {
+        this.stocks = stocks;
+    }
+
+    public List<Finance> getFinances() {
+        return finances;
+    }
+
+    public void setFinances(List<Finance> finances) {
+        this.finances = finances;
+    }
+
+    public BigDecimal getCurrentBalance() {
+        return currentBalance;
+    }
+
+    public void setCurrentBalance(BigDecimal currentBalance) {
+        this.currentBalance = currentBalance;
+    }
+
+    public Long getRestockChicken() {
+        return restockChicken;
+    }
+
+    public void setRestockChicken(Long restockChicken) {
+        this.restockChicken = restockChicken;
+    }
+
+    public Long getRestockBeef() {
+        return restockBeef;
+    }
+
+    public void setRestockBeef(Long restockBeef) {
+        this.restockBeef = restockBeef;
+    }
+
+    public Long getRestockVegetarian() {
+        return restockVegetarian;
+    }
+
+    public void setRestockVegetarian(Long restockVegetarian) {
+        this.restockVegetarian = restockVegetarian;
     }
     
     

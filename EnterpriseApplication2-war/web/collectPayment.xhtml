@@ -119,6 +119,9 @@ and open the template in the editor.
                 <p:column headerText="Customer ID">
                     <h:outputText value="#{booking.customerId}" />
                 </p:column>
+                <p:column headerText="Price">
+                    <h:outputText value="#{booking.price}" />
+                </p:column>
             <p:column headerText="Apply">
                 <p:commandButton value="Apply" action="#{managerBean.collectPayment(booking)}" update="bookingTable" styleClass="apply-button" rendered="#{booking.status eq 'Fulfilled'}" />
             </p:column>

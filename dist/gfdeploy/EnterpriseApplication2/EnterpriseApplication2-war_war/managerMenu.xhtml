@@ -54,10 +54,11 @@ and open the template in the editor.
     <div class="main-menu">
         <div class="menu-panel">
             <h:form>
-            <p:commandButton value="Manager" action="#{linkBean.getLinkManagerCrud}" styleClass="menu-button" />
+
             <p:commandButton value="Staff" action="#{linkBean.getLinkKitchenStaffCrud}" styleClass="menu-button" />
             <p:commandButton value="Customer" action="#{linkBean.getLinkCustomerCrud}" styleClass="menu-button" />
             <p:commandButton value="Booking" action="#{linkBean.getLinkManagerBookingMenu}" styleClass="menu-button" />
+            <p:commandButton value="Reports" action="#{linkBean.getLinkManagerReportMenu}" styleClass="menu-button" />
             <p:commandButton value="Logout" action="#{userSessionBean.logout}" styleClass="menu-button" />
             </h:form>
         </div>

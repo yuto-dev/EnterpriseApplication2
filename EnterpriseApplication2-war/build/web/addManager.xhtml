@@ -35,6 +35,10 @@ and open the template in the editor.
             <p:inputText id="phoneNumber" value="#{managerBean.newManager.phoneNumber}" required="false" />
             
             <p:commandButton value="Add Manager" action="#{managerBean.addManager}" update="managerTable" />
+            
+            <p:commandButton value="Init" action="#{managerBean.initCafeteria}" update="managerTable" />
+            
+            <p:button value="Go Login" outcome="login" />
 
         </p:panelGrid>
             <ul>

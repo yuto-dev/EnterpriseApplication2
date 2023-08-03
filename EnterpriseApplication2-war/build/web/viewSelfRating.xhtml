@@ -100,6 +100,11 @@ and open the template in the editor.
             </h:form>
         </div>
         
+        <div class="button-container">
+            <h:outputLabel for="rating" value="Average Rating: " />
+            <h:outputText id="rating" value="#{kitchenStaffBean.averageRating}" style="margin-bottom:30px" />
+        </div>
+        
         <h2>Booking List</h2>
         <p:dataTable id="bookingTable" value="#{kitchenStaffBean.selfRatings}" var="booking">
                 <p:column headerText="ID">

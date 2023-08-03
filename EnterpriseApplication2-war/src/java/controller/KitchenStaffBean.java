@@ -6,6 +6,7 @@
 package controller;
 
 import facade.BookingFacade;
+import facade.StockFacade;
 import facade.UserFacade;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -14,6 +15,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import model.Booking;
+import model.Stock;
 import model.User;
 
 /**
@@ -29,6 +31,9 @@ public class KitchenStaffBean {
     
     @EJB
     private BookingFacade BookingFacade;
+    
+    @EJB
+    private StockFacade StockFacade;
     
     @Inject
     private UserSessionBean UserSessionBean;
@@ -49,6 +54,8 @@ public class KitchenStaffBean {
     
     private Booking selectedBooking;
     private Long selectedBookingId;
+    
+    double averageRating;
 
     @PostConstruct
     public void init() {
@@ -69,6 +76,7 @@ public class KitchenStaffBean {
         selectedBooking = new Booking();
         selectedBookingId = null;
         
+        averageRating = UserFacade.find(selfId).getRating();
     }
     
     public String formatPhoneNumber(String phoneNumber) {
@@ -147,19 +155,30 @@ public class KitchenStaffBean {
     
     public void progressBooking(Booking booking) {
         setSelectedBooking(booking);
+        Stock stock = StockFacade.getStock();
         
         selectedBookingId = booking.getId();
         if (selectedBookingId != null) {
             Booking BookingToUpdate = BookingFacade.find(selectedBookingId);
 
                 if (BookingToUpdate != null) {
-                    // Update the User's properties using values from the UI
+                    
+                    switch(BookingToUpdate.getFood()) {
+                        case "Chicken":
+                            stock.setChicken(stock.getChicken() - BookingToUpdate.getSeats());
+                            break;
+                        case "Beef":
+                            stock.setBeef(stock.getBeef() - BookingToUpdate.getSeats());
+                            break;
+                        case "Vegetarian":
+                            stock.setVegetarian(stock.getVegetarian() - BookingToUpdate.getSeats());
+                            break;
+                        }
+                    
                     BookingToUpdate.setStatus("Fulfilled");
-                    
-                    
 
-                    // Save the changes to the database
                     BookingFacade.updateBooking(BookingToUpdate);
+                    StockFacade.updateStock(stock);
 
                     // Refresh the list of Users
                     bookings = BookingFacade.getBookingsByKitchenStaff(UserFacade.find(selfId));
@@ -268,6 +287,14 @@ public class KitchenStaffBean {
 
     public void setSelfRatings(List<Booking> selfRatings) {
         this.selfRatings = selfRatings;
+    }
+
+    public double getAverageRating() {
+        return averageRating;
+    }
+
+    public void setAverageRating(double averageRating) {
+        this.averageRating = averageRating;
     }
     
     

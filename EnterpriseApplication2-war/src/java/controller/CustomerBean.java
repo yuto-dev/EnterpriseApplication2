@@ -15,6 +15,7 @@ import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import static jdk.nashorn.internal.runtime.JSType.toLong;
 import model.Booking;
 import model.User;
 
@@ -64,6 +65,8 @@ public class CustomerBean {
     
     private Booking checkBooking;
     
+    private User ratedKitchenStaff;
+    
     
     @PostConstruct
     public void init() {
@@ -103,6 +106,8 @@ public class CustomerBean {
         
         newRating = null;
         newReview = null;
+        
+        ratedKitchenStaff = null;
     }
     
     public String formatPhoneNumber(String phoneNumber) {
@@ -223,6 +228,16 @@ public class CustomerBean {
                         newBookingFood = selectedBooking.getFood();
                     }
                     
+                    if (BookingToUpdate.getFood().equals("Chicken")){
+                        BookingToUpdate.setPrice(8 * BookingToUpdate.getSeats());
+                    }
+                    else if (BookingToUpdate.getFood().equals("Beef")){
+                        BookingToUpdate.setPrice(10 * BookingToUpdate.getSeats());
+                    }
+                    else if (BookingToUpdate.getFood().equals("Vegetarian")){
+                        BookingToUpdate.setPrice(6 * BookingToUpdate.getSeats());
+                    }
+                    
                     BookingToUpdate.setBookingDate(newBookingDate);
                     BookingToUpdate.setSeats(newBookingSeats);
                     BookingToUpdate.setFood(newBookingFood);
@@ -257,14 +272,35 @@ public class CustomerBean {
     public void addRating() {
         
         setSelectedBooking(BookingFacade.find(selectedBookingId));
-
-        if (selectedBookingId != null && selectedBooking.getCustomerId().equals(selfId) && selectedBooking.getStatus().equals("Paid")) {
+        
+        Long completedBooking;
+        
+        ratedKitchenStaff = UserFacade.find(selectedBooking.getAssignedKitchenStaffId());
+        double currentRating = ratedKitchenStaff.getRating();
+        
+        if (selectedBookingId != null && selectedBooking.getCustomerId().equals(selfId) && selectedBooking.getStatus().equals("Paid") || selectedBooking.getStatus().equals("Rated")) {
             Booking BookingToUpdate = BookingFacade.find(selectedBookingId);
 
                 if (BookingToUpdate != null) {
                     // Update the User's properties using values from the UI
                     BookingToUpdate.setId(getSelectedBookingId());
                     
+                    if (BookingToUpdate.getStatus().equals("Paid")){
+                        System.out.println("in paid");
+                        completedBooking = ratedKitchenStaff.getCompletedBooking() + toLong(1);
+                        
+                        double totalRating = currentRating * ratedKitchenStaff.getCompletedBooking();
+                        ratedKitchenStaff.setRating((totalRating + newRating) / completedBooking);
+                        ratedKitchenStaff.setCompletedBooking(completedBooking);
+                        UserFacade.updateUser(ratedKitchenStaff);
+                    }
+                    else if (BookingToUpdate.getStatus().equals("Rated")){
+                        System.out.println("in rated");
+                        double totalRating = currentRating * ratedKitchenStaff.getCompletedBooking() - BookingToUpdate.getRating();
+                        totalRating = totalRating + newRating;
+                        ratedKitchenStaff.setRating(totalRating / ratedKitchenStaff.getCompletedBooking());
+                        UserFacade.updateUser(ratedKitchenStaff);
+                    }
                     BookingToUpdate.setRating(newRating);
                     BookingToUpdate.setReview(newReview);
                     BookingToUpdate.setStatus("Rated");

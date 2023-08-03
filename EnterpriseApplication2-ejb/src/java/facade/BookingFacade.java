@@ -60,6 +60,10 @@ public class BookingFacade {
         return query.getResultList();
     }
 
+    public List<Booking> getRatedBookings() {
+        TypedQuery<Booking> query = em.createQuery("SELECT b FROM Booking b WHERE b.status = 'Rated'", Booking.class);
+        return query.getResultList();
+    }
     
     public List<Booking> getBookingsByCustomer(User customer) {
         TypedQuery<Booking> query = em.createQuery("SELECT b FROM Booking b WHERE b.customer = :customer", Booking.class);

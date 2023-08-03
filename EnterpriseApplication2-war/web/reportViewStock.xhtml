@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+    <title>Ratings List</title>
+    <style>
+        /* Add your custom CSS styles here */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f1f1f1;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            margin-top: 30px;
+            font-weight: bold;
+        }
+
+        ul {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+
+        .update-form {
+            margin-top: 30px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            text-align: center;
+
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-size: 14px;
+        }
+
+        .apply-button {
+            width: 100px;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .button-container {
+            text-align: center;
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+
+        .apply-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</h:head>
+
+<h:body>
+    <div class="container">
+        
+        <div class="button-container">
+            <h:form>
+            <p:commandButton value="Back" action="#{linkBean.getLinkManagerReportMenu}" style="margin: 0 auto; display: block;" />
+            </h:form>
+        </div>
+        
+        <h2>Total Stock</h2>
+        <p:dataTable id="stockTable" value="#{managerBean.stocks}" var="stock">
+                <p:column headerText="ID">
+                    <h:outputText value="#{stock.id}" />
+                </p:column>
+                <p:column headerText="Chicken">
+                    <h:outputText value="#{stock.chicken}" />
+                </p:column>
+                <p:column headerText="Beef">
+                    <h:outputText value="#{stock.beef}" />
+                </p:column>
+                <p:column headerText="Vegetarian">
+                    <h:outputText value="#{stock.vegetarian}" />
+                </p:column>
+        </p:dataTable>
+        
+    </div>
+</h:body>
+</html>
+
