@@ -31,6 +31,7 @@ public class LinkBean {
     private String linkAddKitchenStaff;
     private String linkDeleteKitchenStaff;
     private String linkUpdateKitchenStaff;
+    private String linkSearchKitchenStaff;
     
     private String linkCustomerCrud;
     private String linkAddCustomer;
@@ -96,6 +97,7 @@ public class LinkBean {
         linkAddKitchenStaff = "addKitchenStaff";
         linkDeleteKitchenStaff = "deleteKitchenStaff";
         linkUpdateKitchenStaff = "updateKitchenStaff";
+        linkSearchKitchenStaff = "searchKitchenStaff";
     
         linkCustomerCrud = "customerCrud";
         linkAddCustomer = "addCustomer";
@@ -311,6 +313,11 @@ public class LinkBean {
     public String getLinkReportBuyStock() {
         return linkReportBuyStock;
     }
+
+    public String getLinkSearchKitchenStaff() {
+        return linkSearchKitchenStaff;
+    }
+    
     
     
 }

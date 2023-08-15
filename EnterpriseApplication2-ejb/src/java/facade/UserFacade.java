@@ -65,7 +65,7 @@ public class UserFacade {
         query.setParameter("email", email);
         return (User) query.getSingleResult();
         } catch (NoResultException ex) {
-        // If no user is found, return null or throw an exception as needed
+        // If no user is found, return null
         return null;
         }
     }
@@ -75,6 +75,18 @@ public class UserFacade {
         Query query = em.createQuery("SELECT u FROM User u WHERE u.userType = :userType");
         query.setParameter("userType", userType);
         return query.getResultList();
+    }
+    
+    public List<User> getUserByRoleAndId(String userType, Long userId) {
+        Query query = em.createQuery("SELECT u FROM User u WHERE u.userType = :userType AND u.id = :userId", User.class);
+        query.setParameter("userType", userType);
+        query.setParameter("userId", userId);
+    
+        try {
+            return query.getResultList();
+        } catch (NoResultException ex) {
+            return null; // Return null if no result is found
+        }
     }
     
     public User userLogin(String username, String password) {

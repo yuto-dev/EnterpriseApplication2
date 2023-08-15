@@ -63,6 +63,9 @@ public class ManagerBean implements Serializable {
     private Booking newBooking;
     private List<Booking> bookings;
     
+    private Long searchKitchenStaffId;
+    private User searchKitchenStaff;
+    
     private Long managerIdInput; //delete ID
     private User selectedManager; //current User
     
@@ -231,9 +234,9 @@ public class ManagerBean implements Serializable {
     //
     
     public void addManager() {
-        System.out.println("marco");
+
         newManager.setUserType("M");
-        System.out.println("inside");
+
         if (newManager.getEmail() == null || newManager.getEmail().trim().isEmpty()) {
             newManager.setEmail(newManager.getUsername()+"@mail.com");
         }
@@ -346,6 +349,24 @@ public class ManagerBean implements Serializable {
         
         newKitchenStaff = new User(); // Clear the form after adding a User
         kitchenStaffs = UserFacade.getUsersByRole("S"); // Update the list of Users after adding a new one
+    }
+    
+    public void searchKitchenStaff(){
+        System.out.println("1");
+        if (searchKitchenStaffId != null){
+            System.out.println("2");
+            kitchenStaffs = null;
+            System.out.println("4");
+            kitchenStaffs = UserFacade.getUserByRoleAndId("S", searchKitchenStaffId);
+            System.out.println("5");
+        }
+        else{
+            System.out.println("Kitchen Staff not found");
+        }
+    }
+    
+    public void resetKitchenStaff(){
+        kitchenStaffs = UserFacade.getUsersByRole("S");
     }
     
     public void updateKitchenStaff() {
@@ -552,7 +573,7 @@ public class ManagerBean implements Serializable {
                         BookingFacade.updateBooking(BookingToUpdate);
                         FinanceFacade.addFinance(newFinance);
 
-                        // Refresh the list of Users
+                        // Refresh the list of Bookings
                         bookings = BookingFacade.getAllBookings();
                     }
                     else {
@@ -560,7 +581,7 @@ public class ManagerBean implements Serializable {
                     }
    
                 } else {
-                    // Handle the case when the User with the selected ID is not found
+                    // Handle the case when the Booking with the selected ID is not found
                     System.out.println("Booking with ID " + selectedBookingId + " not found!");
                 }
         } else {
@@ -571,9 +592,6 @@ public class ManagerBean implements Serializable {
     public void restock(){
         
         stocks = StockFacade.getStock();
-        
-        
-        Long restockPrice = null;
         
         if (restockChicken != null){
             Finance newFinance = new Finance();
@@ -927,6 +945,22 @@ public class ManagerBean implements Serializable {
 
     public void setRestockVegetarian(Long restockVegetarian) {
         this.restockVegetarian = restockVegetarian;
+    }
+
+    public Long getSearchKitchenStaffId() {
+        return searchKitchenStaffId;
+    }
+
+    public void setSearchKitchenStaffId(Long searchKitchenStaffId) {
+        this.searchKitchenStaffId = searchKitchenStaffId;
+    }
+
+    public User getSearchKitchenStaff() {
+        return searchKitchenStaff;
+    }
+
+    public void setSearchKitchenStaff(User searchKitchenStaff) {
+        this.searchKitchenStaff = searchKitchenStaff;
     }
     
     

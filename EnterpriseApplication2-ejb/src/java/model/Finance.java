@@ -28,7 +28,7 @@ public class Finance implements Serializable {
     
     private String transactionType;
     private String item;
-    private long amount;
+    private Long amount;
     private BigDecimal balance;
 
     public Long getId() {

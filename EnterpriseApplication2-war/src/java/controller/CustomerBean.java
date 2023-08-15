@@ -228,14 +228,35 @@ public class CustomerBean {
                         newBookingFood = selectedBooking.getFood();
                     }
                     
+                    
+                    
                     if (BookingToUpdate.getFood().equals("Chicken")){
-                        BookingToUpdate.setPrice(8 * BookingToUpdate.getSeats());
+                        
+                        if (BookingToUpdate.getSeats() != selectedBooking.getSeats()){
+                            BookingToUpdate.setPrice(8 * BookingToUpdate.getSeats());
+                        }
+                        else {
+                            BookingToUpdate.setPrice(8 * selectedBooking.getSeats());
+                        }
+                        
                     }
                     else if (BookingToUpdate.getFood().equals("Beef")){
-                        BookingToUpdate.setPrice(10 * BookingToUpdate.getSeats());
+                        
+                        if (BookingToUpdate.getSeats() != selectedBooking.getSeats()){
+                            BookingToUpdate.setPrice(10 * BookingToUpdate.getSeats());
+                        }
+                        else {
+                            BookingToUpdate.setPrice(10 * selectedBooking.getSeats());
+                        }
                     }
                     else if (BookingToUpdate.getFood().equals("Vegetarian")){
-                        BookingToUpdate.setPrice(6 * BookingToUpdate.getSeats());
+                        
+                        if (BookingToUpdate.getSeats() != selectedBooking.getSeats()){
+                            BookingToUpdate.setPrice(6 * BookingToUpdate.getSeats());
+                        }
+                        else {
+                            BookingToUpdate.setPrice(6 * selectedBooking.getSeats());
+                        }
                     }
                     
                     BookingToUpdate.setBookingDate(newBookingDate);
