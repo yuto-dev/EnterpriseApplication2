@@ -66,6 +66,9 @@ public class ManagerBean implements Serializable {
     private Long searchKitchenStaffId;
     private User searchKitchenStaff;
     
+    private Long searchCustomerId;
+    private User searchCustomer;
+    
     private Long managerIdInput; //delete ID
     private User selectedManager; //current User
     
@@ -453,6 +456,24 @@ public class ManagerBean implements Serializable {
         }
         newCustomer = new User(); // Clear the form after adding a User
         customers = UserFacade.getUsersByRole("C"); // Update the list of Users after adding a new one
+    }
+    
+    public void searchCustomer(){
+
+        if (searchCustomerId != null){
+            System.out.println("2");
+            customers = null;
+            System.out.println("4");
+            customers = UserFacade.getUserByRoleAndId("C", searchCustomerId);
+            System.out.println("5");
+        }
+        else{
+            System.out.println("Kitchen Staff not found");
+        }
+    }
+    
+    public void resetCustomer(){
+        customers = UserFacade.getUsersByRole("C");
     }
     
     public void updateCustomer() {
@@ -961,6 +982,22 @@ public class ManagerBean implements Serializable {
 
     public void setSearchKitchenStaff(User searchKitchenStaff) {
         this.searchKitchenStaff = searchKitchenStaff;
+    }
+
+    public Long getSearchCustomerId() {
+        return searchCustomerId;
+    }
+
+    public void setSearchCustomerId(Long searchCustomerId) {
+        this.searchCustomerId = searchCustomerId;
+    }
+
+    public User getSearchCustomer() {
+        return searchCustomer;
+    }
+
+    public void setSearchCustomer(User searchCustomer) {
+        this.searchCustomer = searchCustomer;
     }
     
     

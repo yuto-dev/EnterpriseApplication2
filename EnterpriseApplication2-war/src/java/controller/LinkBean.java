@@ -37,6 +37,7 @@ public class LinkBean {
     private String linkAddCustomer;
     private String linkDeleteCustomer;
     private String linkUpdateCustomer;
+    private String linkSearchCustomer;
     
     private String linkAssignBooking;
     private String linkCollectPayment;
@@ -103,6 +104,7 @@ public class LinkBean {
         linkAddCustomer = "addCustomer";
         linkDeleteCustomer = "deleteCustomer";
         linkUpdateCustomer = "updateCustomer";
+        linkSearchCustomer = "searchCustomer";
         
         linkAssignBooking = "assignBooking";
         linkCollectPayment = "collectPayment";
@@ -316,6 +318,10 @@ public class LinkBean {
 
     public String getLinkSearchKitchenStaff() {
         return linkSearchKitchenStaff;
+    }
+
+    public String getLinkSearchCustomer() {
+        return linkSearchCustomer;
     }
     
     
